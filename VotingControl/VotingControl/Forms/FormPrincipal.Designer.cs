@@ -289,7 +289,7 @@
             // 
             this.lbUsuario.AutoSize = true;
             this.lbUsuario.Font = new System.Drawing.Font("Arial Narrow", 12F);
-            this.lbUsuario.Location = new System.Drawing.Point(18, 7);
+            this.lbUsuario.Location = new System.Drawing.Point(4, 5);
             this.lbUsuario.Name = "lbUsuario";
             this.lbUsuario.Size = new System.Drawing.Size(45, 20);
             this.lbUsuario.TabIndex = 1;
@@ -331,7 +331,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbData.AutoSize = true;
             this.lbData.Font = new System.Drawing.Font("Arial Narrow", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbData.Location = new System.Drawing.Point(17, 6);
+            this.lbData.Location = new System.Drawing.Point(3, 6);
             this.lbData.Name = "lbData";
             this.lbData.Size = new System.Drawing.Size(45, 20);
             this.lbData.TabIndex = 0;

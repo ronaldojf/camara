@@ -14,31 +14,43 @@ namespace VotingControl
 {
     public partial class FormProjetos : Form
     {
+        private Projeto projeto;
+
         public FormProjetos()
         {
             InitializeComponent();
         }
-
         
         private void FormProjetos_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'votingcontrolDataSet.sessoes' table. You can move, or remove it, as needed.
             this.sessoesTableAdapter.Fill(this.votingcontrolDataSet.sessoes);
-            AlteraMaxCaracteres();
-            projeto = new Projeto();
-            // TODO: This line of code loads data into the 'votingcontrolDataSet.vereadores' table. You can move, or remove it, as needed.
             this.vereadoresTableAdapter.Fill(this.votingcontrolDataSet.vereadores);
+            AtualizarMaximoCaracteres();
+
+            this.projeto = new Projeto();
         }
 
-        private Projeto projeto;
-
-        private void OpenForm(Form form)
+        private void AlternarFormsErros()
         {
-            form.Show();
+            errorProvider1.SetError(txTitulo, this.projeto.MostrarMensagem("titulo"));
+            errorProvider1.SetError(cbVereadores, this.projeto.MostrarMensagem("vereadores"));
+            errorProvider1.SetError(cbSessao, this.projeto.MostrarMensagem("sessao"));
         }
+
+        private void RecuperarDadosTextBox()
+        {
+            this.projeto.Titulo = txTitulo.Text;
+            this.projeto.VereadorId = Convert.ToInt32(cbVereadores.SelectedValue);
+        }
+
+        private void AtualizarMaximoCaracteres()
+        {
+            txTitulo.MaxLength = Projeto.MaxCaracteres.Titulo;
+        }
+
         private void btCadastrarVereador_Click(object sender, EventArgs e)
         {
-            OpenForm(new FormVereadores());
+            Decorator.OpenForm(new FormVereadores());
         }
 
         private void cbVereadores_TextChanged(object sender, EventArgs e)
@@ -50,13 +62,8 @@ namespace VotingControl
                 cbVereadores.AutoCompleteCustomSource = autoComplete;
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
         private void btLimpar_Click(object sender, EventArgs e)
         {
-
             Decorator.ClearControls(pnContent.Controls);
             Decorator.FocusOnFirstTextBox(pnContent.Controls);
         }      
@@ -68,39 +75,24 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (projeto.PossuiErros())
+            if (this.projeto.PossuiErros())
                 AlternarFormsErros();
             else
             {
                 AlternarFormsErros();
 
-                if (projeto.Salvar())
+                if (this.projeto.Salvar())
                 {
                     btLimpar_Click(sender, e);
                     Decorator.MessageBoxSuccess("Registro realizado com sucesso!");
                 }
                 else
-                    Decorator.MessageBoxError(projeto.MostrarMensagem("criar"));
+                    Decorator.MessageBoxError(this.projeto.MostrarMensagem("criar"));
 
                 Decorator.FocusOnFirstTextBox(pnContent.Controls);
             }
-            
         }
-        private void AlteraMaxCaracteres()
-        {
-            txTitulo.MaxLength = Projeto.MaxCaracteres.Titulo;
-        }
-        private void AlternarFormsErros()
-        {
-            errorProvider1.SetError(txTitulo, projeto.MostrarMensagem("titulo"));
-            errorProvider1.SetError(cbVereadores, projeto.MostrarMensagem("vereadores"));
-            errorProvider1.SetError(cbSessao, projeto.MostrarMensagem("sessao"));
-        }
-        private void RecuperarDadosTextBox()
-        {
-            projeto.Titulo = txTitulo.Text;
-            projeto.VereadorId = Convert.ToInt32(cbVereadores.SelectedValue);
-        }
+
         private void btAbrirLista_Click(object sender, EventArgs e)
         {
         }
@@ -116,27 +108,11 @@ namespace VotingControl
 
         private void FormProjetos_KeyDown(object sender, KeyEventArgs e)
         {
-
             switch (e.KeyCode)
             {
-
-                case Keys.Enter:
-                    btCadastar_Click(sender, e);
-
-
-                    break;
-
-                case Keys.Escape:
-                    btLimpar_Click(sender, e);
-
-                    break;
-
                 case Keys.F5:
                     btAbrirLista_Click(sender, e);
-
                     break;
-
-
             }
         }
     }

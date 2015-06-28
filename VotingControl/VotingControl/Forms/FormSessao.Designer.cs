@@ -262,7 +262,6 @@
             this.Name = "FormSessao";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro de Sessões";
-            this.Load += new System.EventHandler(this.FormSessao_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormSessao_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

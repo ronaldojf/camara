@@ -12,6 +12,8 @@ namespace VotingControl
 {
     public partial class FormSuplentes : Form
     {
+        Suplente suplente;
+        
         public FormSuplentes()
         {
             InitializeComponent();
@@ -19,27 +21,25 @@ namespace VotingControl
 
         private void FormSuplentes_Load(object sender, EventArgs e)
         {
+            AtualizarMaximoCaracteres();
             suplente = new Suplente();
         }
 
-        Suplente suplente;
-
-        private void txNomeSuplente_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-        }
         private void RecuperarDadosTextBox()
         {
             suplente.Nome = txNome.Text;
             suplente.Cpf = mtxCpf.Text;
         }
-        private void AlternaFormErros()
+
+        private void AlternarFormErros()
         {
             errorProvider.SetError(txNome, suplente.MostrarMensagem("nome"));
             errorProvider.SetError(mtxCpf, suplente.MostrarMensagem("cpf"));
+        }
+
+        private void AtualizarMaximoCaracteres()
+        {
+            txNome.MaxLength = Suplente.MaxCaracteres.Nome;
         }
 
         private void btCadastar_Click(object sender, EventArgs e)
@@ -50,10 +50,10 @@ namespace VotingControl
             RecuperarDadosTextBox();
 
             if (suplente.PossuiErros())
-                AlternaFormErros();
+                AlternarFormErros();
             else
             {
-                AlternaFormErros();
+                AlternarFormErros();
 
                 if (suplente.Salvar())
                 {
@@ -75,33 +75,16 @@ namespace VotingControl
 
         private void btAbrirLista_Click(object sender, EventArgs e)
         {
-
         }
 
         private void FormSuplentes_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
-
-                case Keys.Enter:
-                    btCadastar_Click(sender, e);
-
-
-                    break;
-
-                case Keys.Escape:
-                    btLimpar_Click(sender, e);
-
-                    break;
-
                 case Keys.F5:
                     btAbrirLista_Click(sender, e);
-
                     break;
-
-
             }
-
         }
         
     }

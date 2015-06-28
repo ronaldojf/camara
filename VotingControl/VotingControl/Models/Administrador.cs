@@ -87,7 +87,6 @@ namespace VotingControl
 
         public bool Login(string usuario, string senha)
         {
-
             return this.Where("BINARY usuario = {0} AND BINARY senha = {1}", usuario, senha).Exists();
         }
     }

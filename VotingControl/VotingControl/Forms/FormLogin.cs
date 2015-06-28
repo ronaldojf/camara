@@ -12,14 +12,17 @@ namespace VotingControl
 {
     public partial class FormLogin : Form
     {
+        Administrador administrador;
+
         public FormLogin()
         {
             InitializeComponent();
+            this.administrador = new Administrador();
         }
 
         private void btEntrar_Click(object sender, EventArgs e)
         {
-            if (new Administrador().Login(txUsuario.Text, txSenha.Text))
+            if (this.administrador.Login(txUsuario.Text, txSenha.Text))
             {
                 new FormPrincipal(txUsuario.Text).Show();
                 this.Hide();

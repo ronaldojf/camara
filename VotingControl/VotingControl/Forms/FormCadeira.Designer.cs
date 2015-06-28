@@ -188,6 +188,7 @@
             this.btAbrirLista.Size = new System.Drawing.Size(75, 50);
             this.btAbrirLista.TabIndex = 3;
             this.btAbrirLista.UseVisualStyleBackColor = true;
+            this.btAbrirLista.Click += new System.EventHandler(this.btAbrirLista_Click);
             // 
             // pictureBox1
             // 

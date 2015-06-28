@@ -124,7 +124,7 @@ namespace VotingControl
             return autoComplete;
         }
 
-        public static void openForm(Form form, bool isDialog = false)
+        public static void OpenForm(Form form, bool isDialog = false)
         {
             Cursor.Current = Cursors.AppStarting;
             form.Refresh();
@@ -135,7 +135,7 @@ namespace VotingControl
                 form.Show();
         }
 
-        public static void openForm(Form form, Form mdiForm)
+        public static void OpenForm(Form form, Form mdiForm)
         {
             Cursor.Current = Cursors.AppStarting;
             mdiForm.Refresh();
@@ -144,7 +144,7 @@ namespace VotingControl
             form.Show();
         }
 
-        public static bool DialogDecision(string sDecisao) //realiza a verificação se realmente deseja realizar a operação
+        public static bool DialogDecision(string sDecisao)
         {
             DialogResult Decisao = MessageBox.Show("Deseja realmente "+ sDecisao +" o registro ?",
                sDecisao, MessageBoxButtons.YesNo, MessageBoxIcon.Information);

@@ -14,77 +14,67 @@ namespace VotingControl
 {
     public partial class FormCadeira : Form
     {
+        private Cadeira cadeira;
+
         public FormCadeira()
         {
             InitializeComponent();
-            cadeira = new Cadeira(); //Inicializa o objeto cadeira
         }
-
-        private Cadeira cadeira;
 
         private void FormCadeira_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'votingcontrolDataSet.vereadores' table. You can move, or remove it, as needed.
             this.vereadoresTableAdapter.Fill(this.votingcontrolDataSet.vereadores);
+            AtualizarMaximoCaracteres();
 
-            AtualizarMaximoCaracteres(); // Chama a função que define o tamanho maximo de caracteres ao iniciar o form
-            AlternarFormErros(); //Verifica se possui erros e caso possua os mostra e limpa os campos
+            this.cadeira = new Cadeira();
+        }
+
+        private void RecuperarDadosTextBox()
+        {
+            this.cadeira.Identificador = txIdentificador.Text;
+            this.cadeira.VereadorId = Convert.ToInt32(cbVereadores.SelectedValue);
+        }
+
+        private void AlternarFormErros()
+        {
+            errorProvider.SetError(txIdentificador, this.cadeira.MostrarMensagem("identificador"));
+            errorProvider.SetError(cbVereadores, this.cadeira.MostrarMensagem("vereador_id"));
+        }
+
+        private void AtualizarMaximoCaracteres()
+        {
+            txIdentificador.MaxLength = Cadeira.MaxCaracteres.Identificador;
         }
         
-        //atribuir erro geral
         private void btCadastar_Click(object sender, EventArgs e)
         {
-            //Muda o cursor do mause quando entrar no metodo
             Cursor.Current = Cursors.AppStarting;
-            this.Refresh(); // Mostra o cursor, pois atualiza a tela
+            this.Refresh();
 
             RecuperarDadosTextBox();
-            
-            if (cadeira.PossuiErros()) //Verifica se possui erro nos atributos da cadeira
+
+            if (this.cadeira.PossuiErros())
                 AlternarFormErros();
             else
             {
                 AlternarFormErros();
 
-                if (cadeira.Salvar()) //Caso não tenha nenhum erro grava no banco de dados
+                if (this.cadeira.Salvar())
                 {
-                    btLimpar_Click(sender, e); //Limpa
-                    Decorator.MessageBoxSuccess("Registro criado com sucesso!"); //Messagem 
+                    btLimpar_Click(sender, e);
+                    Decorator.MessageBoxSuccess("Registro criado com sucesso!");
                 }
                 else
-                    Decorator.MessageBoxError(cadeira.MostrarMensagem("criar")); //Erros de conexão ou Sql
+                    Decorator.MessageBoxError(this.cadeira.MostrarMensagem("criar"));
 
-                Decorator.FocusOnFirstTextBox(pnContent.Controls); //Foca no primeiro textBox
-                                
+                Decorator.FocusOnFirstTextBox(pnContent.Controls);
             }
-
-           
         }
 
         private void btLimpar_Click(object sender, EventArgs e)
         {
             Decorator.ClearControls(pnContent.Controls);
             Decorator.FocusOnFirstTextBox(pnContent.Controls);
-        }
-
-        private void RecuperarDadosTextBox()
-        {            
-            //Recupera os dados da textbox
-            cadeira.Identificador = txIdentificador.Text;
-            cadeira.VereadorId = Convert.ToInt32(cbVereadores.SelectedValue);
-        }
-
-        private void AlternarFormErros()
-        {
-            //Mostra o erro setando o errorProvaider ,e limpa o form caso tenha erro nos atributos 
-            errorProvider.SetError(txIdentificador, cadeira.MostrarMensagem("identificador"));
-            errorProvider.SetError(cbVereadores, cadeira.MostrarMensagem("vereador_id"));
-        }
-
-        private void AtualizarMaximoCaracteres()
-        {
-            //Define o tamanho maximo de caracteres para o identificador
-            txIdentificador.MaxLength = Cadeira.MaxCaracteres.Identificador;
         }
 
         private void cbVereadores_TextChanged(object sender, EventArgs e)
@@ -98,7 +88,11 @@ namespace VotingControl
 
         private void btCadastrarVereador_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormVereadores());
+            Decorator.OpenForm(new FormVereadores());
+        }
+
+        private void btAbrirLista_Click(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -79,7 +79,7 @@
             this.btLimpar.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btLimpar.Location = new System.Drawing.Point(23, 25);
             this.btLimpar.Name = "btLimpar";
-            this.btLimpar.Size = new System.Drawing.Size(209, 41);
+            this.btLimpar.Size = new System.Drawing.Size(197, 41);
             this.btLimpar.TabIndex = 1;
             this.btLimpar.Text = "Limpar";
             this.btLimpar.UseVisualStyleBackColor = true;
@@ -178,7 +178,6 @@
             this.Name = "FormPartido";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro de Partidos";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormPartido_FormClosed);
             this.Load += new System.EventHandler(this.FormPartido_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormPartido_KeyDown);
             this.pnFooter.ResumeLayout(false);

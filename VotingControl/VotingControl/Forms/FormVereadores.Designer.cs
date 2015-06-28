@@ -36,7 +36,7 @@
             this.pnContent = new System.Windows.Forms.Panel();
             this.txCaminhoImg = new System.Windows.Forms.TextBox();
             this.btCadastrarPartido = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btEscolherImagem = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.pbVereador = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.partidosTableAdapter = new VotingControl.votingcontrolDataSetTableAdapters.partidosTableAdapter();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel3.SuspendLayout();
             this.pnContent.SuspendLayout();
@@ -109,7 +109,7 @@
             this.pnContent.BackColor = System.Drawing.SystemColors.ControlLight;
             this.pnContent.Controls.Add(this.txCaminhoImg);
             this.pnContent.Controls.Add(this.btCadastrarPartido);
-            this.pnContent.Controls.Add(this.button1);
+            this.pnContent.Controls.Add(this.btEscolherImagem);
             this.pnContent.Controls.Add(this.groupBox1);
             this.pnContent.Controls.Add(this.label3);
             this.pnContent.Controls.Add(this.cbPartido);
@@ -143,18 +143,18 @@
             this.btCadastrarPartido.UseVisualStyleBackColor = true;
             this.btCadastrarPartido.Click += new System.EventHandler(this.btCadastrarPartido_Click);
             // 
-            // button1
+            // btEscolherImagem
             // 
-            this.button1.BackgroundImage = global::VotingControl.Properties.Resources._11252_32x32;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.button1.Font = new System.Drawing.Font("Corbel", 9F);
-            this.button1.Location = new System.Drawing.Point(376, 176);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 38);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "      Escolher Imagem...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btEscolherImagem.BackgroundImage = global::VotingControl.Properties.Resources._11252_32x32;
+            this.btEscolherImagem.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btEscolherImagem.Font = new System.Drawing.Font("Corbel", 9F);
+            this.btEscolherImagem.Location = new System.Drawing.Point(376, 176);
+            this.btEscolherImagem.Name = "btEscolherImagem";
+            this.btEscolherImagem.Size = new System.Drawing.Size(159, 38);
+            this.btEscolherImagem.TabIndex = 6;
+            this.btEscolherImagem.Text = "      Escolher Imagem...";
+            this.btEscolherImagem.UseVisualStyleBackColor = true;
+            this.btEscolherImagem.Click += new System.EventHandler(this.btEscolherImagem_Click);
             // 
             // groupBox1
             // 
@@ -311,9 +311,9 @@
             // 
             this.partidosTableAdapter.ClearBeforeFill = true;
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.FileName = "openFileDialog1";
             // 
             // errorProvider
             // 
@@ -372,7 +372,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbPartido;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btEscolherImagem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.PictureBox pbVereador;
         private System.Windows.Forms.Button btAbrirLista;
@@ -380,7 +380,7 @@
         private votingcontrolDataSet votingcontrolDataSet;
         private System.Windows.Forms.BindingSource partidosBindingSource;
         private votingcontrolDataSetTableAdapters.partidosTableAdapter partidosTableAdapter;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.TextBox txCaminhoImg;
         private System.Windows.Forms.ErrorProvider errorProvider;
     }

@@ -12,6 +12,8 @@ namespace VotingControl
 {
     public partial class FormVereadores : Form
     {
+        Vereador vereador;
+
         public FormVereadores()
         {
             InitializeComponent();
@@ -19,28 +21,48 @@ namespace VotingControl
 
         private void FormVereadores_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'votingcontrolDataSet.partidos' table. You can move, or remove it, as needed.
-            this.partidosTableAdapter.Fill(this.votingcontrolDataSet.partidos);
-            vereador = new Vereador();
-            txNome.Focus();
+            AtualizarPartidos();
+            AtualizarMaximoCaracteres();
+            openFileDialog.Title = "Escolher Imagem";
             cbSexo.Items.AddRange(SexosHuman.Tipos);
+            txNome.Focus();
+
+            this.vereador = new Vereador();
         }
 
-        Vereador vereador;
-
-        private void OpenForm(Form form)
+        public void AtualizarPartidos()
         {
-            form.Show();
+            this.partidosTableAdapter.Fill(this.votingcontrolDataSet.partidos);
         }
-               
+
+        private void RecuperarDadosTextBox()
+        {
+            this.vereador.Nome = txNome.Text;
+            this.vereador.Sexo = SexosHuman.EnumFor(cbSexo.Text);
+            this.vereador.Cpf = mtxCPF.Text;
+            this.vereador.PartidoId = (int)cbPartido.SelectedValue;
+            this.vereador.Foto = txCaminhoImg.Text;
+        }
+
+        private void AlternarFormErros()
+        {
+            errorProvider.SetError(txNome, this.vereador.MostrarMensagem("nome"));
+            errorProvider.SetError(cbSexo, this.vereador.MostrarMensagem("sexo"));
+            errorProvider.SetError(mtxCPF, this.vereador.MostrarMensagem("cpf"));
+            errorProvider.SetError(cbPartido, this.vereador.MostrarMensagem("partido"));
+            errorProvider.SetError(txCaminhoImg, this.vereador.MostrarMensagem("foto"));
+        }
+
+        private void AtualizarMaximoCaracteres()
+        {
+            txNome.MaxLength = Vereador.MaxCaracteres.Nome;
+        }
+
         private void btCadastrarPartido_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormPartido(this), true);
+            Decorator.OpenForm(new FormPartido(this), true);
         }
-        public void Atualizar()
-        {
-            FormVereadores_Load(null, null);
-        }
+
         private void btLimpar_Click(object sender, EventArgs e)
         {
             Decorator.ClearControls(pnContent.Controls);
@@ -56,64 +78,45 @@ namespace VotingControl
             this.Cursor = Cursors.AppStarting;
             this.Refresh();
 
-            RecuperarDadosForm();
+            RecuperarDadosTextBox();
 
-            if (vereador.PossuiErros())
-               AlternarFormErros();
+            if (this.vereador.PossuiErros())
+                AlternarFormErros();
             else
             {
-                if (vereador.Salvar())
+                if (this.vereador.Salvar())
                 {
                     AlternarFormErros();
                     btLimpar_Click(sender, e);
                     Decorator.MessageBoxSuccess("Registro gravado com sucesso.");
                 }
                 else
-                    Decorator.MessageBoxError(vereador.MostrarMensagem("criar"));
+                    Decorator.MessageBoxError(this.vereador.MostrarMensagem("criar"));
             }
 
             Decorator.FocusOnFirstTextBox(pnContent.Controls);
             this.Cursor = Cursors.Default;
         }
-        private void RecuperarDadosForm()
-        {
-            vereador.Nome = txNome.Text;
-            vereador.Sexo = SexosHuman.EnumFor(cbSexo.Text);
-            vereador.Cpf = mtxCPF.Text;
-            vereador.PartidoId = (int)cbPartido.SelectedValue;
-            vereador.Foto = txCaminhoImg.Text;
 
-        }   
-        private void AlternarFormErros()
-        {
-            errorProvider.SetError(txNome, vereador.MostrarMensagem("nome"));
-            errorProvider.SetError(cbSexo, vereador.MostrarMensagem("sexo"));
-            errorProvider.SetError(mtxCPF, vereador.MostrarMensagem("cpf"));
-            errorProvider.SetError(cbPartido, vereador.MostrarMensagem("partido"));
-            errorProvider.SetError(txCaminhoImg, vereador.MostrarMensagem("foto"));
-        }
         private void FormVereadores_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
                 case Keys.F5:
                     btAbrirLista_Click(sender, e);
-
                     break;
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btEscolherImagem_Click(object sender, EventArgs e)
         {
-            this.openFileDialog1.Title = "Escolher Imagem";
-            DialogResult escolherImagem = openFileDialog1.ShowDialog(); // abre a caixa de dialogo onde podera ser pegado o path da imagem.
+            DialogResult escolherImagem = openFileDialog.ShowDialog();
+
             if (escolherImagem == DialogResult.OK)
             {
-                txCaminhoImg.Text = openFileDialog1.FileName;
-                Image imagem = Image.FromFile(txCaminhoImg.Text);
-                pbVereador.Image = imagem;
+                txCaminhoImg.Text = openFileDialog.FileName;
+                pbVereador.Image = Image.FromFile(txCaminhoImg.Text);
             }
-
         }
     }
 }

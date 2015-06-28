@@ -170,7 +170,6 @@
             this.txNome.Name = "txNome";
             this.txNome.Size = new System.Drawing.Size(288, 20);
             this.txNome.TabIndex = 0;
-            this.txNome.TextChanged += new System.EventHandler(this.txNomeSuplente_TextChanged);
             // 
             // label7
             // 

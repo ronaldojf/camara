@@ -15,14 +15,14 @@ namespace VotingControl
 {
     public partial class FormPrincipal : Form
     {
-        private void FormPrincipal_Load(object sender, EventArgs e)
+        Administrador administrador;
+
+        public FormPrincipal(Administrador administrador)
         {
-            DateTime DataInicial = DateTime.Now;
-            lbData.Text = Convert.ToString(DataInicial);
-
-            lbData.ForeColor = System.Drawing.Color.DarkBlue;
-            lbUsuario.ForeColor = System.Drawing.Color.DarkBlue;
-
+            InitializeComponent();
+            
+            this.administrador = administrador;
+            lbUsuario.Text = this.administrador.Usuario;
         }
 
         public FormPrincipal(string usuario)
@@ -31,19 +31,26 @@ namespace VotingControl
             lbUsuario.Text = usuario;
         }
 
+        private void FormPrincipal_Load(object sender, EventArgs e)
+        {
+            lbData.Text = Convert.ToString(DateTime.Now);
+            lbData.ForeColor = System.Drawing.Color.DarkBlue;
+            lbUsuario.ForeColor = System.Drawing.Color.DarkBlue;
+        }
+
         private void sessoesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormSessao(), this);
+            Decorator.OpenForm(new FormSessao(), this);
         }
         
         private void vereadoresToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormVereadores(), this);
+            Decorator.OpenForm(new FormVereadores(), this);
         }
 
         private void FormPrincipal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult dialog = MessageBox.Show("Você tem certeza que deseja fechar o sistema ?", "Aviso",
+            DialogResult dialog = MessageBox.Show("Você tem certeza que deseja fechar o sistema?", "Aviso",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (dialog == DialogResult.Yes)
@@ -59,35 +66,31 @@ namespace VotingControl
 
             if (dialog == DialogResult.Yes)
                 Application.ExitThread();
-            else
-            {
-            }
         }
 
         private void projetosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormProjetos(), this);
+            Decorator.OpenForm(new FormProjetos(), this);
         }
 
         private void suplentesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormSuplentes(), this);
+            Decorator.OpenForm(new FormSuplentes(), this);
         }
 
         private void cadeirasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormCadeira(), this);
+            Decorator.OpenForm(new FormCadeira(), this);
         }
 
         private void partidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Decorator.openForm(new FormPartido(), this);
+            Decorator.OpenForm(new FormPartido(), this);
         }
 
         private void manualDeAjudaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Mostra o arquivo de ajuda, Path.GetFullPath("Diretorio") retorna o caminho do executavel e passa o resto do caminho do arquivo de ajuda;
-            Help.ShowHelp(this, Path.GetFullPath(@"..\..\Ajuda\Ajuda Voting Control.chm")); //@ Permite colocar apenas \ ao invez de \\  e ..\..\ volta duas pastas a partir do diretorio do executavel.
+            Help.ShowHelp(this, Path.GetFullPath(@"..\..\Ajuda\Ajuda Voting Control.chm"));
         }
     }
 }
