@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B7C9CF44-9762-4018-8BE8-23ED8ED9ECD3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VotingControl</RootNamespace>
+    <AssemblyName>VotingControl</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'isejgtojdfgoijdafsoijhoidfjh|AnyCPU'">
+    <OutputPath>bin\isejgtojdfgoijdafsoijhoidfjh\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\BelongsToAttribute.cs" />
+    <Compile Include="Attributes\ColumnAttribute.cs" />
+    <Compile Include="Attributes\HasAndBelongsToManyAttribute.cs" />
+    <Compile Include="Attributes\HasManyAttribute.cs" />
+    <Compile Include="Attributes\HasOneAttribute.cs" />
+    <Compile Include="Attributes\PrimaryKeyAttribute.cs" />
+    <Compile Include="Attributes\TableAttribute.cs" />
+    <Compile Include="Bases\ActiveRecorder.cs" />
+    <Compile Include="Bases\DBComunicator.cs" />
+    <Compile Include="Bases\ErrorMessages.cs" />
+    <Compile Include="Enumerators\Sexos.cs" />
+    <Compile Include="Enumerators\TiposDeSessao.cs" />
+    <Compile Include="Enumerators\TiposDeVoto.cs" />
+    <Compile Include="Forms\FormCadeira.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCadeira.Designer.cs">
+      <DependentUpon>FormCadeira.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPartido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPartido.Designer.cs">
+      <DependentUpon>FormPartido.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPrincipal.Designer.cs">
+      <DependentUpon>FormPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormProjetos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormProjetos.Designer.cs">
+      <DependentUpon>FormProjetos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSessao.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSessao.Designer.cs">
+      <DependentUpon>FormSessao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSuplentes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSuplentes.Designer.cs">
+      <DependentUpon>FormSuplentes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormVereadores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormVereadores.designer.cs">
+      <DependentUpon>FormVereadores.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\Cnpj.cs" />
+    <Compile Include="Helpers\Cpf.cs" />
+    <Compile Include="Helpers\ReflectionHelpers.cs" />
+    <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="Helpers\Validator.cs" />
+    <Compile Include="Models\Administrador.cs" />
+    <Compile Include="Models\Cadeira.cs" />
+    <Compile Include="Models\Partido.cs" />
+    <Compile Include="Models\Projeto.cs" />
+    <Compile Include="Models\Sessao.cs" />
+    <Compile Include="Models\Suplente.cs" />
+    <Compile Include="Models\Vereador.cs" />
+    <Compile Include="Models\Voto.cs" />
+    <Compile Include="Others\Decorator.cs" />
+    <Compile Include="Others\Verbos.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="votingcontrolDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>votingcontrolDataSet.xsd</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Forms\FormCadeira.resx">
+      <DependentUpon>FormCadeira.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPartido.resx">
+      <DependentUpon>FormPartido.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPrincipal.resx">
+      <DependentUpon>FormPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormProjetos.resx">
+      <DependentUpon>FormProjetos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSessao.resx">
+      <DependentUpon>FormSessao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSuplentes.resx">
+      <DependentUpon>FormSuplentes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormVereadores.resx">
+      <DependentUpon>FormVereadores.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="votingcontrolDataSet.xsc">
+      <DependentUpon>votingcontrolDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="votingcontrolDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>votingcontrolDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="votingcontrolDataSet.xss">
+      <DependentUpon>votingcontrolDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lupa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alterar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\838_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\782_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7881_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\funcionario.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\11252_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7859_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7777_64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1001_64x64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\818_128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\818_32x32.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
