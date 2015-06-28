@@ -80,7 +80,7 @@
             this.btCadastar.Name = "btCadastar";
             this.btCadastar.Size = new System.Drawing.Size(289, 41);
             this.btCadastar.TabIndex = 5;
-            this.btCadastar.Text = "Cadastrar";
+            this.btCadastar.Text = "Gravar";
             this.btCadastar.UseVisualStyleBackColor = true;
             this.btCadastar.Click += new System.EventHandler(this.btCadastar_Click);
             // 

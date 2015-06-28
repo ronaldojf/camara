@@ -75,7 +75,7 @@
             this.btCadastar.Name = "btCadastar";
             this.btCadastar.Size = new System.Drawing.Size(292, 41);
             this.btCadastar.TabIndex = 4;
-            this.btCadastar.Text = "Cadastrar";
+            this.btCadastar.Text = "Gravar";
             this.btCadastar.UseVisualStyleBackColor = true;
             this.btCadastar.Click += new System.EventHandler(this.btCadastar_Click);
             // 
@@ -112,7 +112,7 @@
             this.btCadastrarVereador.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btCadastrarVereador.Location = new System.Drawing.Point(331, 34);
             this.btCadastrarVereador.Name = "btCadastrarVereador";
-            this.btCadastrarVereador.Size = new System.Drawing.Size(33, 22);
+            this.btCadastrarVereador.Size = new System.Drawing.Size(24, 22);
             this.btCadastrarVereador.TabIndex = 1;
             this.btCadastrarVereador.UseVisualStyleBackColor = true;
             this.btCadastrarVereador.Click += new System.EventHandler(this.btCadastrarVereador_Click);
@@ -134,9 +134,9 @@
             this.cbVereadores.DataSource = this.vereadoresBindingSource;
             this.cbVereadores.DisplayMember = "nome";
             this.cbVereadores.FormattingEnabled = true;
-            this.cbVereadores.Location = new System.Drawing.Point(370, 35);
+            this.cbVereadores.Location = new System.Drawing.Point(361, 35);
             this.cbVereadores.Name = "cbVereadores";
-            this.cbVereadores.Size = new System.Drawing.Size(253, 21);
+            this.cbVereadores.Size = new System.Drawing.Size(262, 21);
             this.cbVereadores.TabIndex = 2;
             this.cbVereadores.ValueMember = "id";
             this.cbVereadores.TextChanged += new System.EventHandler(this.cbVereadores_TextChanged);
