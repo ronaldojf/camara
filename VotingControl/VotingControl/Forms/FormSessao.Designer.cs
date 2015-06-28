@@ -70,17 +70,17 @@
             // 
             this.btAbrirLista.BackgroundImage = global::VotingControl.Properties.Resources.alterar;
             this.btAbrirLista.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btAbrirLista.Location = new System.Drawing.Point(562, 6);
+            this.btAbrirLista.Location = new System.Drawing.Point(548, 6);
             this.btAbrirLista.Name = "btAbrirLista";
             this.btAbrirLista.Size = new System.Drawing.Size(75, 50);
-            this.btAbrirLista.TabIndex = 3;
+            this.btAbrirLista.TabIndex = 7;
             this.btAbrirLista.UseVisualStyleBackColor = true;
             this.btAbrirLista.Click += new System.EventHandler(this.btAbrirLista_Click);
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(6, 8);
+            this.pictureBox1.Location = new System.Drawing.Point(23, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(76, 50);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -91,7 +91,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Corbel", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(88, 18);
+            this.label5.Location = new System.Drawing.Point(105, 17);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(219, 29);
             this.label5.TabIndex = 1;
@@ -117,25 +117,25 @@
             // 
             this.dtpFimSessao.CustomFormat = "dd/MM/yyyy hh:mm";
             this.dtpFimSessao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpFimSessao.Location = new System.Drawing.Point(414, 92);
+            this.dtpFimSessao.Location = new System.Drawing.Point(438, 92);
             this.dtpFimSessao.Name = "dtpFimSessao";
-            this.dtpFimSessao.Size = new System.Drawing.Size(172, 20);
-            this.dtpFimSessao.TabIndex = 15;
+            this.dtpFimSessao.Size = new System.Drawing.Size(185, 20);
+            this.dtpFimSessao.TabIndex = 3;
             // 
             // dtpInicioSessao
             // 
             this.dtpInicioSessao.CustomFormat = "dd/MM/yyyy hh:mm";
             this.dtpInicioSessao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpInicioSessao.Location = new System.Drawing.Point(208, 92);
+            this.dtpInicioSessao.Location = new System.Drawing.Point(229, 92);
             this.dtpInicioSessao.Name = "dtpInicioSessao";
-            this.dtpInicioSessao.Size = new System.Drawing.Size(179, 20);
-            this.dtpInicioSessao.TabIndex = 14;
+            this.dtpInicioSessao.Size = new System.Drawing.Size(185, 20);
+            this.dtpInicioSessao.TabIndex = 2;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(410, 65);
+            this.label4.Location = new System.Drawing.Point(434, 65);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(130, 23);
             this.label4.TabIndex = 13;
@@ -145,7 +145,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(16, 65);
+            this.label2.Location = new System.Drawing.Point(19, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 23);
             this.label2.TabIndex = 10;
@@ -155,33 +155,33 @@
             // 
             this.cbTipo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTipo.FormattingEnabled = true;
-            this.cbTipo.Location = new System.Drawing.Point(20, 91);
+            this.cbTipo.Location = new System.Drawing.Point(23, 91);
             this.cbTipo.Name = "cbTipo";
-            this.cbTipo.Size = new System.Drawing.Size(160, 21);
-            this.cbTipo.TabIndex = 11;
+            this.cbTipo.Size = new System.Drawing.Size(185, 21);
+            this.cbTipo.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(204, 65);
+            this.label3.Location = new System.Drawing.Point(225, 65);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(141, 23);
             this.label3.TabIndex = 12;
-            this.label3.Text = "Inìcio da Sessão: ";
+            this.label3.Text = "Início da Sessão: ";
             // 
             // txTituloSessao
             // 
-            this.txTituloSessao.Location = new System.Drawing.Point(20, 35);
+            this.txTituloSessao.Location = new System.Drawing.Point(23, 35);
             this.txTituloSessao.Name = "txTituloSessao";
-            this.txTituloSessao.Size = new System.Drawing.Size(591, 20);
-            this.txTituloSessao.TabIndex = 9;
+            this.txTituloSessao.Size = new System.Drawing.Size(600, 20);
+            this.txTituloSessao.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(16, 9);
+            this.label1.Location = new System.Drawing.Point(19, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 23);
             this.label1.TabIndex = 8;
@@ -203,10 +203,10 @@
             this.btContinuar.BackgroundImage = global::VotingControl.Properties.Resources._7859_32x32;
             this.btContinuar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btContinuar.Font = new System.Drawing.Font("Corbel", 12F);
-            this.btContinuar.Location = new System.Drawing.Point(447, 23);
+            this.btContinuar.Location = new System.Drawing.Point(438, 27);
             this.btContinuar.Name = "btContinuar";
-            this.btContinuar.Size = new System.Drawing.Size(190, 41);
-            this.btContinuar.TabIndex = 5;
+            this.btContinuar.Size = new System.Drawing.Size(185, 41);
+            this.btContinuar.TabIndex = 6;
             this.btContinuar.Text = "Continuar";
             this.btContinuar.UseVisualStyleBackColor = true;
             this.btContinuar.Click += new System.EventHandler(this.btContinuar_Click);
@@ -216,10 +216,10 @@
             this.btCadastar.BackgroundImage = global::VotingControl.Properties.Resources._7881_32x32;
             this.btCadastar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btCadastar.Font = new System.Drawing.Font("Corbel", 12F);
-            this.btCadastar.Location = new System.Drawing.Point(208, 23);
+            this.btCadastar.Location = new System.Drawing.Point(229, 27);
             this.btCadastar.Name = "btCadastar";
-            this.btCadastar.Size = new System.Drawing.Size(214, 41);
-            this.btCadastar.TabIndex = 4;
+            this.btCadastar.Size = new System.Drawing.Size(185, 41);
+            this.btCadastar.TabIndex = 5;
             this.btCadastar.Text = "Gravar";
             this.btCadastar.UseVisualStyleBackColor = true;
             this.btCadastar.Click += new System.EventHandler(this.btCadastar_Click);
@@ -228,11 +228,12 @@
             // 
             this.btLimpar.BackgroundImage = global::VotingControl.Properties.Resources._782_32x32;
             this.btLimpar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btLimpar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btLimpar.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btLimpar.Location = new System.Drawing.Point(7, 23);
+            this.btLimpar.Location = new System.Drawing.Point(23, 27);
             this.btLimpar.Name = "btLimpar";
-            this.btLimpar.Size = new System.Drawing.Size(173, 41);
-            this.btLimpar.TabIndex = 3;
+            this.btLimpar.Size = new System.Drawing.Size(185, 41);
+            this.btLimpar.TabIndex = 4;
             this.btLimpar.Text = "Limpar";
             this.btLimpar.UseVisualStyleBackColor = true;
             this.btLimpar.Click += new System.EventHandler(this.btLimpar_Click);
@@ -243,21 +244,24 @@
             // 
             // FormSessao
             // 
+            this.AcceptButton = this.btCadastar;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonShadow;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.CancelButton = this.btLimpar;
             this.ClientSize = new System.Drawing.Size(660, 290);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.pnContent);
             this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSessao";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cadastro de Sessão";
+            this.Text = "Cadastro de Sessões";
             this.Load += new System.EventHandler(this.FormSessao_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormSessao_KeyDown);
             this.panel1.ResumeLayout(false);

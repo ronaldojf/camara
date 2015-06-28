@@ -15,9 +15,8 @@ namespace VotingControl
         public FormVereadores()
         {
             InitializeComponent();
-            
-            
         }
+
         private void FormVereadores_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'votingcontrolDataSet.partidos' table. You can move, or remove it, as needed.
@@ -25,7 +24,6 @@ namespace VotingControl
             vereador = new Vereador();
             txNome.Focus();
             cbSexo.Items.AddRange(SexosHuman.Tipos);
-            
         }
 
         Vereador vereador;
@@ -98,24 +96,10 @@ namespace VotingControl
         {
             switch (e.KeyCode)
             {
-
-                case Keys.Enter:
-                    btCadastar_Click(sender, e);
-
-
-                    break;
-
-                case Keys.Escape:
-                    btLimpar_Click(sender, e);
-
-                    break;
-
                 case Keys.F5:
                     btAbrirLista_Click(sender, e);
 
                     break;
-
-
             }
         }
 
@@ -128,18 +112,8 @@ namespace VotingControl
                 txCaminhoImg.Text = openFileDialog1.FileName;
                 Image imagem = Image.FromFile(txCaminhoImg.Text);
                 pbVereador.Image = imagem;
-            }   
+            }
 
         }
-
-       
-
-      
-       
-        
-
-        
-
-        
     }
 }

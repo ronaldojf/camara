@@ -89,49 +89,18 @@ namespace VotingControl
 
         private void btContinuar_Click(object sender, EventArgs e)
         {
-            
-                OpenForm(new FormProjetos());
-           
+            OpenForm(new FormProjetos());
         }
 
         private void FormSessao_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
-
-                case Keys.Enter:
-                    btCadastar_Click(sender, e);
-
-
-                    break;
-
-                case Keys.Escape:
-                    btLimpar_Click(sender, e);
-
-                    break;
-
                 case Keys.F5:
                     btAbrirLista_Click(sender, e);
 
                     break;
-
-
             }
-
-     
         }
-
-        
-
-        
-        
-
-       
-
-       
-
-       
-
-        
     }
 }

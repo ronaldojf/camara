@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPrincipal));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cadastrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sessoesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -155,8 +156,8 @@
             // timersToolStripMenuItem
             // 
             this.timersToolStripMenuItem.Name = "timersToolStripMenuItem";
-            this.timersToolStripMenuItem.Size = new System.Drawing.Size(121, 24);
-            this.timersToolStripMenuItem.Text = "Timer\'s";
+            this.timersToolStripMenuItem.Size = new System.Drawing.Size(176, 24);
+            this.timersToolStripMenuItem.Text = "Temporizadores";
             // 
             // ajudaToolStripMenuItem
             // 
@@ -274,7 +275,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(68, 19);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Usuario:";
+            this.label2.Text = "Usuário:";
             // 
             // panel3
             // 
@@ -343,9 +344,11 @@
             this.ClientSize = new System.Drawing.Size(1201, 394);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "VotingControl";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormPrincipal_FormClosing);

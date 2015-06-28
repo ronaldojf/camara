@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.pnFooter = new System.Windows.Forms.Panel();
             this.btEntrar = new System.Windows.Forms.Button();
             this.btFechar = new System.Windows.Forms.Button();
@@ -60,10 +61,10 @@
             this.btEntrar.BackgroundImage = global::VotingControl.Properties.Resources._7881_32x32;
             this.btEntrar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btEntrar.Font = new System.Drawing.Font("Corbel", 12F);
-            this.btEntrar.Location = new System.Drawing.Point(247, 17);
+            this.btEntrar.Location = new System.Drawing.Point(217, 21);
             this.btEntrar.Name = "btEntrar";
-            this.btEntrar.Size = new System.Drawing.Size(133, 40);
-            this.btEntrar.TabIndex = 4;
+            this.btEntrar.Size = new System.Drawing.Size(177, 40);
+            this.btEntrar.TabIndex = 3;
             this.btEntrar.Text = "  Entrar";
             this.btEntrar.UseVisualStyleBackColor = true;
             this.btEntrar.Click += new System.EventHandler(this.btEntrar_Click);
@@ -74,10 +75,10 @@
             this.btFechar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.btFechar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btFechar.Font = new System.Drawing.Font("Corbel", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btFechar.Location = new System.Drawing.Point(91, 17);
+            this.btFechar.Location = new System.Drawing.Point(29, 21);
             this.btFechar.Name = "btFechar";
-            this.btFechar.Size = new System.Drawing.Size(133, 40);
-            this.btFechar.TabIndex = 3;
+            this.btFechar.Size = new System.Drawing.Size(182, 40);
+            this.btFechar.TabIndex = 2;
             this.btFechar.Text = "  Fechar";
             this.btFechar.UseVisualStyleBackColor = true;
             this.btFechar.Click += new System.EventHandler(this.btFechar_Click);
@@ -94,36 +95,36 @@
             this.pnContent.Size = new System.Drawing.Size(425, 84);
             this.pnContent.TabIndex = 23;
             // 
+            // txUsuario
+            // 
+            this.txUsuario.Location = new System.Drawing.Point(106, 19);
+            this.txUsuario.Name = "txUsuario";
+            this.txUsuario.Size = new System.Drawing.Size(288, 20);
+            this.txUsuario.TabIndex = 0;
+            // 
             // txSenha
             // 
-            this.txSenha.Location = new System.Drawing.Point(168, 45);
+            this.txSenha.Location = new System.Drawing.Point(106, 49);
             this.txSenha.Name = "txSenha";
-            this.txSenha.Size = new System.Drawing.Size(179, 20);
-            this.txSenha.TabIndex = 11;
+            this.txSenha.Size = new System.Drawing.Size(288, 20);
+            this.txSenha.TabIndex = 1;
             this.txSenha.UseSystemPasswordChar = true;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(99, 41);
+            this.label2.Location = new System.Drawing.Point(37, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 23);
             this.label2.TabIndex = 10;
             this.label2.Text = "Senha:";
             // 
-            // txUsuario
-            // 
-            this.txUsuario.Location = new System.Drawing.Point(168, 19);
-            this.txUsuario.Name = "txUsuario";
-            this.txUsuario.Size = new System.Drawing.Size(179, 20);
-            this.txUsuario.TabIndex = 9;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Corbel", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(87, 15);
+            this.label1.Location = new System.Drawing.Point(25, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(75, 23);
             this.label1.TabIndex = 8;
@@ -142,7 +143,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::VotingControl.Properties.Resources._1001_64x64;
-            this.pictureBox1.Location = new System.Drawing.Point(16, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(29, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(69, 56);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -153,7 +154,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Corbel", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(91, 17);
+            this.label5.Location = new System.Drawing.Point(157, 17);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(148, 29);
             this.label5.TabIndex = 1;
@@ -171,6 +172,7 @@
             this.Controls.Add(this.pnContent);
             this.Controls.Add(this.pnHeader);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormLogin";
