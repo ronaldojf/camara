@@ -5,6 +5,7 @@ using MySql.Data.Types;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VotingControl.Bases;
 using VotingControl.Attributes;
@@ -14,6 +15,8 @@ namespace VotingControl
     [Table("vereadores")]
     public class Vereador : ActiveRecorder<Vereador>
     {
+        private string _cpf = "";
+
         /// <summary>
         /// Inicializa uma nova instância de Vereador
         /// </summary>
@@ -49,7 +52,14 @@ namespace VotingControl
         public Sexos Sexo { get; set; }
 
         [Column("cpf")]
-        public string Cpf { get; set; }
+        public string Cpf
+        {
+            get { return this._cpf; }
+            set
+            {
+                this._cpf = Regex.Replace(value, @"\D", "");
+            }
+        }
 
         public int PartidoId { get; set; }
 
@@ -147,7 +157,7 @@ namespace VotingControl
             Validator validateSexo = new Validator(this.Sexo, "sexo");
             validateSexo.Presence(true);
 
-            Validator validateCpf = new Validator(this.Cpf, "cpf");
+            Validator validateCpf = new Validator(this.Cpf, "CPF");
             validateCpf.Presence().CpfVerification().Uniqueness<Vereador>();
 
             Validator validatePartidoId = new Validator(this.PartidoId, "partido_id");

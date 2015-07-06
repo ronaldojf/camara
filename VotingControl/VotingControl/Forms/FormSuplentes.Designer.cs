@@ -149,7 +149,7 @@
             // mtxCpf
             // 
             this.mtxCpf.Location = new System.Drawing.Point(337, 35);
-            this.mtxCpf.Mask = "000.000.000-00";
+            this.mtxCpf.Mask = "000,000,000-00";
             this.mtxCpf.Name = "mtxCpf";
             this.mtxCpf.Size = new System.Drawing.Size(289, 20);
             this.mtxCpf.TabIndex = 1;

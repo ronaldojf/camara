@@ -22,6 +22,7 @@ namespace VotingControl
         private void FormSuplentes_Load(object sender, EventArgs e)
         {
             AtualizarMaximoCaracteres();
+            this.ActiveControl = txNome;
             suplente = new Suplente();
         }
 

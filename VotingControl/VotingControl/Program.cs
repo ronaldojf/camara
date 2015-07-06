@@ -13,6 +13,7 @@ namespace VotingControl
         /// Objeto de conexão com o banco
         /// </summary>
         public static MySqlConnection Connection = new MySqlConnection(Properties.Settings.Default.votingcontrolConnectionString);
+        public static Form FormPrincipal = null;
 
         /// <summary>
         /// The main entry point for the application.
@@ -22,7 +23,7 @@ namespace VotingControl
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormProjetos());
+            Application.Run(new FormLogin());
         }
     }
 }

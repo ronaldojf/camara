@@ -138,7 +138,7 @@ namespace VotingControl
 
             public static string Uniqueness(string propertyName)
             {
-                return propertyName.ToLower() + " já foi cadastrado";
+                return propertyName.Replace("_", " ") + " já foi cadastrado";
             }
         }
 
@@ -148,7 +148,7 @@ namespace VotingControl
 
             public static string Uniqueness(string propertyName)
             {
-                return propertyName.ToLower() + " já foi cadastrada";
+                return propertyName.Replace("_", " ") + " já foi cadastrada";
             }
         }
 
@@ -167,7 +167,7 @@ namespace VotingControl
         /// <returns>Retorna um objeto Validator com a validação executada</returns>
         public Validator Presence(bool isEnumerator = false)
         {
-            double numberWithoutPresence = isEnumerator ? 1d : 0d;
+            double numberWithoutPresence = isEnumerator ? -1d : 0d;
             
             if (this.PropertyType == Types.String && String.IsNullOrWhiteSpace(this.Property.ToString()))
             {

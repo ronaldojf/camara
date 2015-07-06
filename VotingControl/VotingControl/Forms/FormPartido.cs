@@ -34,7 +34,7 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider1.SetError(txSigla, partido.ShowMessage("sigla"));
+            errorProvider.SetError(txSigla, partido.ShowMessage("sigla"));
         }
 
         private void  AtualizarMaximoCaracteres()

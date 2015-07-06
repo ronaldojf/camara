@@ -5,6 +5,7 @@ using MySql.Data.Types;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using VotingControl.Bases;
 using VotingControl.Attributes;
@@ -14,6 +15,8 @@ namespace VotingControl
     [Table("suplentes")]
     public class Suplente : ActiveRecorder<Suplente>
     {
+        private string _cpf = "";
+
         /// <summary>
         /// Inicializa uma nova instância de Suplente
         /// </summary>
@@ -41,7 +44,14 @@ namespace VotingControl
         public string Nome { get; set; }
 
         [Column("cpf")]
-        public string Cpf { get; set; }
+        public string Cpf
+        {
+            get { return this._cpf; }
+            set
+            {
+                this._cpf = Regex.Replace(value, @"\D", "");
+            }
+        }
 
         /// <summary>
         /// Cria um novo suplente ou atualiza um suplente existente
@@ -131,7 +141,7 @@ namespace VotingControl
             Validator validateNome = new Validator(this.Nome, "nome");
             validateNome.Presence().LessOrEqualsThan(MaxCaracteres.Nome);
 
-            Validator validateCpf = new Validator(this.Cpf, "cpf");
+            Validator validateCpf = new Validator(this.Cpf, "CPF");
             validateCpf.Presence().CpfVerification().Uniqueness<Suplente>();
 
             if (!validateNome.IsValid || !validateCpf.IsValid)

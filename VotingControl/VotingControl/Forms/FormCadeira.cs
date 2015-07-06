@@ -24,6 +24,7 @@ namespace VotingControl
         private void FormCadeira_Load(object sender, EventArgs e)
         {
             this.vereadoresTableAdapter.Fill(this.votingcontrolDataSet.vereadores);
+            this.ActiveControl = txIdentificador;
             AtualizarMaximoCaracteres();
 
             this.cadeira = new Cadeira();

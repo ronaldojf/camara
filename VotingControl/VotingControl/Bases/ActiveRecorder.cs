@@ -105,6 +105,13 @@ namespace VotingControl.Bases
             return (T)this;
         }
 
+        public T Rewhere(string conditions, params object[] values)
+        {
+            this._params = new MySqlParameter[0];
+            this._where = "";
+            return this.Where(conditions, values);
+        }
+
         public T OrderBy(string orderByString)
         {
             orderByString = orderByString.Contains(" ") ? orderByString : (orderByString + " ASC");
@@ -159,7 +166,7 @@ namespace VotingControl.Bases
         {
             this._select = "COUNT(*) AS counter";
             DataTable dataTable = SearchInDataTable();
-            
+
             return Convert.ToInt32(dataTable.Rows[0]["counter"]);
         }
 

@@ -128,15 +128,15 @@ namespace VotingControl
             return autoComplete;
         }
 
-        public static void OpenForm(Form form, bool isDialog = false)
+        public static void OpenForm(Form form)
         {
             Cursor.Current = Cursors.AppStarting;
             form.Refresh();
-            
-            if (isDialog)
-                form.ShowDialog();
-            else
-                form.Show();
+
+            if (Program.FormPrincipal != null && form.MdiParent == null)
+                form.MdiParent = Program.FormPrincipal;
+
+            form.Show();
         }
 
         public static void OpenForm(Form form, Form mdiForm)

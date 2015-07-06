@@ -17,6 +17,7 @@ namespace VotingControl
         public FormLogin()
         {
             InitializeComponent();
+            this.ActiveControl = txUsuario;
             this.administrador = new Administrador();
         }
 
@@ -24,7 +25,8 @@ namespace VotingControl
         {
             if (this.administrador.Login(txUsuario.Text, txSenha.Text))
             {
-                new FormPrincipal(txUsuario.Text).Show();
+                Program.FormPrincipal = new FormPrincipal(txUsuario.Text);
+                Program.FormPrincipal.Show();
                 this.Hide();
             }
             else

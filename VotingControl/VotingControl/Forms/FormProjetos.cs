@@ -20,11 +20,17 @@ namespace VotingControl
         {
             InitializeComponent();
         }
+
+        public void RefreshVereadores()
+        {
+            this.vereadoresTableAdapter.Fill(this.votingcontrolDataSet.vereadores);
+        }
         
         private void FormProjetos_Load(object sender, EventArgs e)
         {
             this.sessoesTableAdapter.Fill(this.votingcontrolDataSet.sessoes);
-            this.vereadoresTableAdapter.Fill(this.votingcontrolDataSet.vereadores);
+            RefreshVereadores();
+            this.ActiveControl = txTitulo;
             AtualizarMaximoCaracteres();
 
             this.projeto = new Projeto();
@@ -33,8 +39,8 @@ namespace VotingControl
         private void AlternarFormErros()
         {
             errorProvider.SetError(txTitulo, this.projeto.ShowMessage("titulo"));
-            errorProvider.SetError(cbVereadores, this.projeto.ShowMessage("vereadores"));
-            errorProvider.SetError(cbSessao, this.projeto.ShowMessage("sessao"));
+            errorProvider.SetError(cbVereadores, this.projeto.ShowMessage("vereador_id"));
+            errorProvider.SetError(cbSessao, this.projeto.ShowMessage("sessao_id"));
         }
 
         private void RecuperarDadosTextBox()
@@ -50,7 +56,7 @@ namespace VotingControl
 
         private void btCadastrarVereador_Click(object sender, EventArgs e)
         {
-            Decorator.OpenForm(new FormVereadores(), true);
+            Decorator.OpenForm(new FormVereadores(this));
         }
 
         private void cbVereadores_TextChanged(object sender, EventArgs e)

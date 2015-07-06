@@ -13,10 +13,12 @@ namespace VotingControl
     public partial class FormVereadores : Form
     {
         Vereador vereador;
+        FormProjetos formProjetos;
 
-        public FormVereadores()
+        public FormVereadores(FormProjetos formProjetos = null)
         {
             InitializeComponent();
+            this.formProjetos = formProjetos;
         }
 
         private void FormVereadores_Load(object sender, EventArgs e)
@@ -25,7 +27,8 @@ namespace VotingControl
             AtualizarMaximoCaracteres();
             openFileDialog.Title = "Escolher Imagem";
             cbSexo.Items.AddRange(SexosHuman.Types);
-            txNome.Focus();
+            cbSexo.SelectedIndex = 0;
+            this.ActiveControl = txNome;
 
             this.vereador = new Vereador();
         }
@@ -49,7 +52,7 @@ namespace VotingControl
             errorProvider.SetError(txNome, this.vereador.ShowMessage("nome"));
             errorProvider.SetError(cbSexo, this.vereador.ShowMessage("sexo"));
             errorProvider.SetError(mtxCPF, this.vereador.ShowMessage("cpf"));
-            errorProvider.SetError(cbPartido, this.vereador.ShowMessage("partido"));
+            errorProvider.SetError(cbPartido, this.vereador.ShowMessage("partido_id"));
             errorProvider.SetError(txCaminhoImg, this.vereador.ShowMessage("foto"));
         }
 
@@ -60,7 +63,7 @@ namespace VotingControl
 
         private void btCadastrarPartido_Click(object sender, EventArgs e)
         {
-            Decorator.OpenForm(new FormPartido(this), true);
+            Decorator.OpenForm(new FormPartido(this));
         }
 
         private void btLimpar_Click(object sender, EventArgs e)
@@ -79,17 +82,20 @@ namespace VotingControl
             this.Refresh();
 
             RecuperarDadosTextBox();
-
+            
             if (this.vereador.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
+                
+                if (this.formProjetos != null)
+                    this.formProjetos.RefreshVereadores();
             }
             else if (this.vereador.HasErrorsOn("criar"))
                 Decorator.MessageBoxError(this.vereador.ShowMessage("criar"));
 
             AlternarFormErros();
-            Decorator.FocusOnFirstTextBox(pnContent.Controls);
+            this.ActiveControl = txNome;
             this.Cursor = Cursors.Default;
         }
 

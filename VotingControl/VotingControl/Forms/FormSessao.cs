@@ -19,6 +19,7 @@ namespace VotingControl
             InitializeComponent();
             AtualizarMaximoCaracteres();
             cbTipo.Items.AddRange(TiposDeSessaoHuman.Types);
+            this.ActiveControl = txTituloSessao;
             
             this.sessao = new Sessao();
         }
