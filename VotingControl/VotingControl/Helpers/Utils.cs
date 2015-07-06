@@ -16,14 +16,14 @@ namespace VotingControl
         /// <summary>
         /// Formata o dinheiro
         /// </summary>
-        /// <param name="_text">Texto para formatar</param>
+        /// <param name="text">Texto para formatar</param>
         /// <returns>Retorna o texto formatado</returns>
-        public static string FormatarMoeda(string _text, string _prefixo = "R$")
+        public static string FormatCurrency(string text, string prefix = "R$")
         {
-            if (string.IsNullOrWhiteSpace(_text) || !Regex.IsMatch(_text, @"\d"))
-                _text = "0";
+            if (string.IsNullOrWhiteSpace(text) || !Regex.IsMatch(text, @"\d"))
+                text = "0";
 
-            string numeros = Convert.ToInt64(Regex.Match(_text, @"[\.|,\d]+").ToString().Replace(".", "").Replace(",", "")).ToString();
+            string numeros = Convert.ToInt64(Regex.Match(text, @"[\.|,\d]+").ToString().Replace(".", "").Replace(",", "")).ToString();
 
             if (numeros.Length < 4)
             {
@@ -44,7 +44,7 @@ namespace VotingControl
                 numeros = numeros.Insert(numeros.Length - 2, ",");
             }
 
-            return _prefixo.Trim() + " " + numeros;
+            return prefix.Trim() + " " + numeros;
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace VotingControl
         /// </summary>
         /// <param name="_nascimento">Data inicial.</param>
         /// <returns>Retorna a idade em <c>int</c>.</returns>
-        public static int CalcularIdade(DateTime _nascimento)
+        public static int AgeFor(DateTime _nascimento)
         {
             int mesAtual = DateTime.Today.Month;
             int diaAtual = DateTime.Today.Day;
@@ -70,7 +70,7 @@ namespace VotingControl
         /// </summary>
         /// <param name="data">Data em <c>ShortStringDate</c> no formato americano ou brasileiro</param>
         /// <returns>Retorna a data no formato brasileiro</returns>
-        public static string VerificarDataBR(string _data)
+        public static string ToPtBrDate(string _data)
         {
             if (_data.Contains('-'))
             {

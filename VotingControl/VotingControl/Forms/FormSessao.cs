@@ -18,7 +18,7 @@ namespace VotingControl
         {
             InitializeComponent();
             AtualizarMaximoCaracteres();
-            cbTipo.Items.AddRange(TiposDeSessaoHuman.Tipos);
+            cbTipo.Items.AddRange(TiposDeSessaoHuman.Types);
             
             this.sessao = new Sessao();
         }
@@ -33,10 +33,10 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider.SetError(txTituloSessao, this.sessao.MostrarMensagem("titulo"));
-            errorProvider.SetError(cbTipo, this.sessao.MostrarMensagem("tipo"));
-            errorProvider.SetError(dtpInicioSessao, this.sessao.MostrarMensagem("inicio"));
-            errorProvider.SetError(dtpFimSessao, this.sessao.MostrarMensagem("fim"));
+            errorProvider.SetError(txTituloSessao, this.sessao.ShowMessage("titulo"));
+            errorProvider.SetError(cbTipo, this.sessao.ShowMessage("tipo"));
+            errorProvider.SetError(dtpInicioSessao, this.sessao.ShowMessage("inicio"));
+            errorProvider.SetError(dtpFimSessao, this.sessao.ShowMessage("fim"));
         }
 
         private void AtualizarMaximoCaracteres()
@@ -51,13 +51,13 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.sessao.Salvar())
+            if (this.sessao.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
-            else if (this.sessao.PossuiErrosEm("criar"))
-                Decorator.MessageBoxError(this.sessao.MostrarMensagem("criar"));
+            else if (this.sessao.HasErrorsOn("criar"))
+                Decorator.MessageBoxError(this.sessao.ShowMessage("criar"));
 
             AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);

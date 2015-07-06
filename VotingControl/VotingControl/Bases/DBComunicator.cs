@@ -14,15 +14,15 @@ namespace VotingControl.Bases
     {
         private bool connectionWasOpenedHere = false;
 
-        public DBComunicator(string nomeTabela) : base()
+        public DBComunicator(string tableName) : base()
         {
-            this.nomeTabela = nomeTabela;
+            this.TableName = tableName;
         }
 
         /// <summary>
         /// Nome da tabela no banco de dados
         /// </summary>
-        public string nomeTabela { get; private set; }
+        public string TableName { get; private set; }
 
         protected MySqlParameter[] ParamsGenerator(List<string> _fields, List<MySqlDbType> _types, List<object> _values)
         {
@@ -64,7 +64,7 @@ namespace VotingControl.Bases
             try { this.OpenConnection(); }
             catch
             {
-                base.AddMensagem(verb, "Erro ao abrir a conexão com o banco de dados.");
+                base.AddMessage(verb, "Erro ao abrir a conexão com o banco de dados.");
                 this.CloseConnection();
                 return isOk;
             }
@@ -72,7 +72,7 @@ namespace VotingControl.Bases
             try { comm.ExecuteNonQuery(); isOk = true; }
             catch (Exception e)
             {
-                base.AddMensagem(verb, "Não foi possível " + verb + " o registro!\n" + e.Message);
+                base.AddMessage(verb, "Não foi possível " + verb + " o registro!\n" + e.Message);
                 this.CloseConnection();
                 return isOk;
             }
@@ -90,7 +90,7 @@ namespace VotingControl.Bases
             try { dataAdapter.Fill(dataTable); }
             catch (Exception e)
             {
-                base.AddMensagem("buscar", "Erro ao realizar consulta no banco de dados. \n" + e.Message);
+                base.AddMessage("buscar", "Erro ao realizar consulta no banco de dados. \n" + e.Message);
                 this.CloseConnection();
                 return new DataTable();
             }
@@ -106,16 +106,16 @@ namespace VotingControl.Bases
         /// <param name="_values">Os valores que serão gravados nos campos.</param>
         /// <param name="_types">Os tipos dos valores que serão gravados.</param>
         /// <returns>Retorna true caso o registro tenha sido inserido com sucesso, senão retorna false</returns>
-        public bool ExecutarInsert(List<string> _fields, List<object> _values, List<MySqlDbType> _types)
+        public bool ExecuteInsert(List<string> _fields, List<object> _values, List<MySqlDbType> _types)
         {
             MySqlParameter[] parameters = ParamsGenerator(_fields, _types, _values);
 
-            MySqlCommand comm = new MySqlCommand("INSERT INTO " + this.nomeTabela + " (" + string.Join(", ", _fields) +
+            MySqlCommand comm = new MySqlCommand("INSERT INTO " + this.TableName + " (" + string.Join(", ", _fields) +
                                     ") VALUES (@" + string.Join(", @", _fields) + ")", Program.Connection);
 
             comm.Parameters.AddRange(parameters);
 
-            return ExecuteChangesOnDB(comm, Verbos.Criar);
+            return ExecuteChangesOnDB(comm, Verbs.Create);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace VotingControl.Bases
         /// <param name="_values">Os valores que serão gravados nos campos.</param>
         /// <param name="_types">Os tipos dos valores que serão gravados.</param>
         /// <returns>Retorna true caso o registro tenha sido atualizadp com sucesso, senão retorna false</returns>
-        public bool ExecutarUpdate(string _primaryKeyName, int _id, List<string> _fields, List<object> _values, List<MySqlDbType> _types)
+        public bool ExecuteUpdate(string _primaryKeyName, int _id, List<string> _fields, List<object> _values, List<MySqlDbType> _types)
         {
             MySqlParameter[] parameters = ParamsGenerator(_fields, _types, _values);
 
@@ -136,12 +136,12 @@ namespace VotingControl.Bases
             for (int i = 0; i < _fields.Count; i++)
                 setString += _fields[i] + " = @" + _fields[i] + ", ";
 
-            MySqlCommand comm = new MySqlCommand("UPDATE " + this.nomeTabela + " SET " + setString.Substring(0, setString.Length - 2) +
-                                " WHERE " + this.nomeTabela + "." + _primaryKeyName + " = " + _id, Program.Connection);
+            MySqlCommand comm = new MySqlCommand("UPDATE " + this.TableName + " SET " + setString.Substring(0, setString.Length - 2) +
+                                " WHERE " + this.TableName + "." + _primaryKeyName + " = " + _id, Program.Connection);
 
             comm.Parameters.AddRange(parameters);
 
-            return ExecuteChangesOnDB(comm, Verbos.Atualizar);
+            return ExecuteChangesOnDB(comm, Verbs.Update);
         }
 
         /// <summary>
@@ -150,15 +150,15 @@ namespace VotingControl.Bases
         /// <param name="_primaryKeyName">Nome da chave primária no banco.</param>
         /// <param name="_id">Chave primária do registro.</param>
         /// <returns>Retorna true se a operação for executada com sucesso, senão false</returns>
-        public bool ExecutarDelete(string _primaryKeyName, int _id)
+        public bool ExecuteDelete(string _primaryKeyName, int _id)
         {
-            MySqlCommand comm = new MySqlCommand("DELETE FROM " + this.nomeTabela + " WHERE " + _primaryKeyName + " = " + _id,
+            MySqlCommand comm = new MySqlCommand("DELETE FROM " + this.TableName + " WHERE " + _primaryKeyName + " = " + _id,
                 Program.Connection);
 
-            return ExecuteChangesOnDB(comm, Verbos.Excluir);
+            return ExecuteChangesOnDB(comm, Verbs.Delete);
         }
 
-        public DataTable ExecutarSelect(string selectString,
+        public DataTable ExecuteSelect(string selectString,
                                                  string fromString,
                                                  string joinString,
                                                  string whereString,

@@ -23,11 +23,11 @@ namespace VotingControl.Bases
             
             this._params = new MySqlParameter[0];
 
-            this._select = base.nomeTabela + ".*";
-            this._from = base.nomeTabela;
+            this._select = base.TableName + ".*";
+            this._from = base.TableName;
         }
 
-        private T ObjetoDaClasse { get; set; }
+        private T ClassObject { get; set; }
 
         private List<string> OriginalFields { get; set; }
         private List<string> Fields { get; set; }
@@ -80,7 +80,7 @@ namespace VotingControl.Bases
                 string paramName = "param_" + this._fieldCount;
 
                 whereFields.Add(paramName);
-                whereTypes.Add(TipoMySqlParaTipoValor(values[i].GetType()));
+                whereTypes.Add(MySqlTypeForValueType(values[i].GetType()));
                 whereValues.Add(values[i]); 
 
                 conditions = conditions.Replace("{" + i + "}", "@" + paramName);
@@ -139,18 +139,18 @@ namespace VotingControl.Bases
             return (T)this;
         }
 
-        public List<T> Buscar()
+        public List<T> Search()
         {
-            this.ObjetoDaClasse = new T();
-            RecuperarValoresDoObjeto(this.ObjetoDaClasse);
+            this.ClassObject = new T();
+            GetObjectValues(this.ClassObject);
 
             return ConvertToChildObjectList(ExecuteSelect());
         }
 
-        public DataTable BuscarEmDataTable()
+        public DataTable SearchInDataTable()
         {
-            this.ObjetoDaClasse = new T();
-            RecuperarValoresDoObjeto(this.ObjetoDaClasse);
+            this.ClassObject = new T();
+            GetObjectValues(this.ClassObject);
 
             return ExecuteSelect();
         }
@@ -158,7 +158,7 @@ namespace VotingControl.Bases
         public int Count()
         {
             this._select = "COUNT(*) AS counter";
-            DataTable dataTable = BuscarEmDataTable();
+            DataTable dataTable = SearchInDataTable();
             
             return Convert.ToInt32(dataTable.Rows[0]["counter"]);
         }
@@ -178,45 +178,45 @@ namespace VotingControl.Bases
         public T Last() { return this.GetOneOrdenatedData("DESC", 0); }
         public List<T> Last(int quantity) { return GetCustomOrdenatedQuantityOfData("DESC", quantity); }
  
-        protected bool Salvar(T objetoDaClasse)
+        protected bool Save(T classObject)
         {
-            if (!base.PossuiErros())
+            if (!base.HasErrors())
             {
-                RecuperarValoresDoObjeto(objetoDaClasse);
+                GetObjectValues(classObject);
 
                 int resultId = 0;
 
-                object id = this.GetPrimaryKeyOf(objetoDaClasse).GetValue(objetoDaClasse);
+                object id = this.GetPrimaryKeyOf(classObject).GetValue(classObject);
 
                 if (Int32.TryParse(id.ToString(), out resultId) && resultId > 0)
                 {
-                    string primaryKeyName = this.GetPrimaryKeyOf(objetoDaClasse)
+                    string primaryKeyName = this.GetPrimaryKeyOf(classObject)
                         .GetCustomAttribute<ColumnAttribute>()
                         .Name;
 
-                    return base.ExecutarUpdate(primaryKeyName, resultId, this.Fields, this.Values, this.Types);
+                    return base.ExecuteUpdate(primaryKeyName, resultId, this.Fields, this.Values, this.Types);
                 }
                 else
-                    return base.ExecutarInsert(this.Fields, this.Values, this.Types);
+                    return base.ExecuteInsert(this.Fields, this.Values, this.Types);
             }
             else
                 return false;
         }
 
-        protected bool Deletar(T objetoDaClasse)
+        protected bool Delete(T classObject)
         {
-            if (!base.PossuiErros())
+            if (!base.HasErrors())
             {
                 int resultId = 0;
 
-                PropertyInfo primaryKey = this.GetPrimaryKeyOf(objetoDaClasse);
+                PropertyInfo primaryKey = this.GetPrimaryKeyOf(classObject);
 
-                object primaryKeyValue = primaryKey.GetValue(objetoDaClasse);
+                object primaryKeyValue = primaryKey.GetValue(classObject);
 
                 string primaryKeyName = primaryKey.Name;
                 
                 if (Int32.TryParse(primaryKeyValue.ToString(), out resultId))
-                    return base.ExecutarDelete(primaryKeyName, resultId);
+                    return base.ExecuteDelete(primaryKeyName, resultId);
                 else
                     return false;
             }
@@ -226,17 +226,17 @@ namespace VotingControl.Bases
 
         private DataTable ExecuteSelect()
         {
-            return base.ExecutarSelect(this._select, this._from, this._join,
+            return base.ExecuteSelect(this._select, this._from, this._join,
                                         this._where, this._orderBy, this._groupBy,
                                         this._limit, this._offset, this._params);
         }
 
-        private void RecuperarValoresDoObjeto(object objetoDaClasse)
+        private void GetObjectValues(object classObject)
         {
-            LimparValoresDoObjeto();
+            ClearObjectsValues();
 
             IList<PropertyInfo> props =
-                new List<PropertyInfo>(objetoDaClasse
+                new List<PropertyInfo>(classObject
                     .GetType()
                     .GetProperties()
                     .Where(prop => Attribute.IsDefined(prop, typeof(ColumnAttribute))));
@@ -247,22 +247,22 @@ namespace VotingControl.Bases
 
                 this.OriginalFields.Add(prop.Name);
                 this.Fields.Add(columnAttr.Name);
-                this.Types.Add(columnAttr.TypeChanged ? (MySqlDbType)columnAttr.Type : TipoMySqlParaTipoValor(prop.PropertyType));
-                this.Values.Add(prop.GetValue(objetoDaClasse));
+                this.Types.Add(columnAttr.TypeChanged ? (MySqlDbType)columnAttr.Type : MySqlTypeForValueType(prop.PropertyType));
+                this.Values.Add(prop.GetValue(classObject));
             }
         }
 
-        private MySqlDbType TipoMySqlParaTipoValor(Type tipo)
+        private MySqlDbType MySqlTypeForValueType(Type type)
         {
-            if (tipo.Name == "String")
+            if (type.Name == "String")
                 return MySqlDbType.VarChar;
-            else if (tipo.Name == "DateTime")
+            else if (type.Name == "DateTime")
                 return MySqlDbType.DateTime;
             else
                 return MySqlDbType.Int32;
         }
 
-        private void LimparValoresDoObjeto()
+        private void ClearObjectsValues()
         {
             this.Types.Clear();
             this.Values.Clear();
@@ -303,20 +303,20 @@ namespace VotingControl.Bases
 
         private List<T> GetCustomOrdenatedQuantityOfData(string ordenation, int quantity, int index = 0)
         {
-            this.ObjetoDaClasse = new T();
+            this.ClassObject = new T();
 
-            string primaryName = this.GetPrimaryKeyOf(this.ObjetoDaClasse)
+            string primaryName = this.GetPrimaryKeyOf(this.ClassObject)
                 .GetCustomAttribute<ColumnAttribute>()
                 .Name;
             
-            this._from = base.nomeTabela;
+            this._from = base.TableName;
             this._limit = quantity;
             this._orderBy = primaryName + " " + ordenation;
 
             if (index > 0)
                 this._offset = index;
 
-            return this.Buscar();
+            return this.Search();
         }
 
         private T GetOneOrdenatedData(string ordenation, int index)

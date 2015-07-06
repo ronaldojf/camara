@@ -9,10 +9,10 @@ namespace VotingControl
     /// <summary>
     /// Ações executadas no banco, para definir qual será o atributo de mensagem de erro padrão
     /// </summary>
-    public struct Verbos
+    public struct Verbs
     {
-        public static string Criar = "criar";
-        public static string Atualizar = "atualizar";
-        public static string Excluir = "excluir";
+        public static string Create = "criar";
+        public static string Update = "atualizar";
+        public static string Delete = "excluir";
     }
 }

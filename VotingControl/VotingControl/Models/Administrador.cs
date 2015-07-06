@@ -42,10 +42,10 @@ namespace VotingControl
         /// Cria um novo administrador ou atualiza um administrador existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -54,18 +54,18 @@ namespace VotingControl
         /// Exclui um administrador existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateSenha = new Validator(this.Senha, "senha");
             validateSenha.Presence().Between(MaxCaracteres.MinSenha, MaxCaracteres.MaxSenha);
@@ -75,8 +75,8 @@ namespace VotingControl
 
             if (!validateUsuario.IsValid || !validateSenha.IsValid)
             {
-                base.AddMensagens(validateUsuario.Errors);
-                base.AddMensagens(validateSenha.Errors);
+                base.AddMessages(validateUsuario.Errors);
+                base.AddMessages(validateSenha.Errors);
                 return false;
             }
             else

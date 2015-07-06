@@ -46,10 +46,10 @@ namespace VotingControl
         /// Cria um novo voto ou atualiza um voto existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -58,18 +58,18 @@ namespace VotingControl
         /// Exclui um voto existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateTipo = new Validator(this.Tipo, "tipo");
             validateTipo.Presence(true);
@@ -85,10 +85,10 @@ namespace VotingControl
 
             if (validateTipo.IsValid || validateProjetoId.IsValid || validateVereadorId.IsValid || validateSessaoId.IsValid)
             {
-                base.AddMensagens(validateTipo.Errors);
-                base.AddMensagens(validateProjetoId.Errors);
-                base.AddMensagens(validateVereadorId.Errors);
-                base.AddMensagens(validateSessaoId.Errors);
+                base.AddMessages(validateTipo.Errors);
+                base.AddMessages(validateProjetoId.Errors);
+                base.AddMessages(validateVereadorId.Errors);
+                base.AddMessages(validateSessaoId.Errors);
                 return false;
             }
             else

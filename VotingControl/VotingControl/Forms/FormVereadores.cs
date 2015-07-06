@@ -24,7 +24,7 @@ namespace VotingControl
             AtualizarPartidos();
             AtualizarMaximoCaracteres();
             openFileDialog.Title = "Escolher Imagem";
-            cbSexo.Items.AddRange(SexosHuman.Tipos);
+            cbSexo.Items.AddRange(SexosHuman.Types);
             txNome.Focus();
 
             this.vereador = new Vereador();
@@ -46,11 +46,11 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider.SetError(txNome, this.vereador.MostrarMensagem("nome"));
-            errorProvider.SetError(cbSexo, this.vereador.MostrarMensagem("sexo"));
-            errorProvider.SetError(mtxCPF, this.vereador.MostrarMensagem("cpf"));
-            errorProvider.SetError(cbPartido, this.vereador.MostrarMensagem("partido"));
-            errorProvider.SetError(txCaminhoImg, this.vereador.MostrarMensagem("foto"));
+            errorProvider.SetError(txNome, this.vereador.ShowMessage("nome"));
+            errorProvider.SetError(cbSexo, this.vereador.ShowMessage("sexo"));
+            errorProvider.SetError(mtxCPF, this.vereador.ShowMessage("cpf"));
+            errorProvider.SetError(cbPartido, this.vereador.ShowMessage("partido"));
+            errorProvider.SetError(txCaminhoImg, this.vereador.ShowMessage("foto"));
         }
 
         private void AtualizarMaximoCaracteres()
@@ -80,13 +80,13 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.vereador.Salvar())
+            if (this.vereador.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
-            else if (this.vereador.PossuiErrosEm("criar"))
-                Decorator.MessageBoxError(this.vereador.MostrarMensagem("criar"));
+            else if (this.vereador.HasErrorsOn("criar"))
+                Decorator.MessageBoxError(this.vereador.ShowMessage("criar"));
 
             AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);

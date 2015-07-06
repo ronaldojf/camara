@@ -112,13 +112,13 @@ namespace VotingControl
         public static AutoCompleteStringCollection AutoCompleteFor(string text, DataTable dataTable)
         {
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
-            text = text.ToLower().RemoverAcentos();
+            text = text.ToLower().RemoveAccents();
 
             for (int i1 = 0; i1 < dataTable.Rows.Count; i1++)
             {
                 for (int i2 = 0; i2 < dataTable.Rows[i1].ItemArray.Length; i2++)
                 {
-                    string baseString = dataTable.Rows[i1][i2].ToString().ToLower().RemoverAcentos();
+                    string baseString = dataTable.Rows[i1][i2].ToString().ToLower().RemoveAccents();
 
                     if (baseString.Contains(text))
                         autoComplete.Add(dataTable.Rows[i1][i2].ToString());
@@ -148,12 +148,12 @@ namespace VotingControl
             form.Show();
         }
 
-        public static bool DialogDecision(string sDecisao)
+        public static bool DialogDecision(string action)
         {
-            DialogResult Decisao = MessageBox.Show("Deseja realmente "+ sDecisao +" o registro ?",
-               sDecisao, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult Decision = MessageBox.Show("Deseja realmente "+ action +" o registro ?",
+               action, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-            return Decisao == DialogResult.Yes;            
+            return Decision == DialogResult.Yes;            
         }
     }
 }

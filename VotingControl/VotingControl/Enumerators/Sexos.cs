@@ -14,7 +14,7 @@ namespace VotingControl
 
     public struct SexosHuman
     {
-        public static string[] Tipos = new string[]
+        public static string[] Types = new string[]
         {
             "Masculino",
             "Feminino",
@@ -24,12 +24,12 @@ namespace VotingControl
         //Retorna uma string contendo a definição do enumerado
         public static string TextFor(Sexos sexo)
         {
-            return Tipos[Convert.ToInt32(sexo)];
+            return Types[Convert.ToInt32(sexo)];
         }
 
-        public static Sexos EnumFor(string sexoText)
+        public static Sexos EnumFor(string genderText)
         {
-            return (Sexos)Array.FindIndex<string>(Tipos, tipo => tipo == sexoText);
+            return (Sexos)Array.FindIndex<string>(Types, tipo => tipo == genderText);
         }
     }
 }

@@ -49,10 +49,10 @@ namespace VotingControl
         /// Cria um nova cadeira ou atualiza uma cadeira existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -61,27 +61,27 @@ namespace VotingControl
         /// Exclui uma cadeira existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Salva o objeto atual e seus respectivos relacionamentos de muitos para muitos
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool SalvarComRelacionamentos()
+        public bool SaveWithRelationship()
         {
-            if (this.Validar())
+            if (this.Validate())
             {
                 Program.Connection.Open();
                 bool isOk = false;
 
                 using (var transaction = Program.Connection.BeginTransaction())
                 {
-                    isOk = this.Salvar();
+                    isOk = this.Save();
                     int ultimoIdCadeira = Convert.ToInt32(this.Select("LAST_INSERT_ID() as last_id")
-                        .BuscarEmDataTable()
+                        .SearchInDataTable()
                         .Rows[0]["last_id"]);
 
                     foreach (Sessao sessao in this.Sessoes)
@@ -89,13 +89,13 @@ namespace VotingControl
                         if (!isOk)
                             break;
 
-                        isOk = sessao.Salvar();
+                        isOk = sessao.Save();
                     }
 
                     if (isOk)
                     {
                         int ultimoIdSessao = Convert.ToInt32(this.Select("LAST_INSERT_ID() as last_id")
-                            .BuscarEmDataTable()
+                            .SearchInDataTable()
                             .Rows[0]["last_id"]);
 
                         string[] fields = new string[] { "sessao_id", "cadeira_id" };
@@ -103,7 +103,7 @@ namespace VotingControl
                         MySqlDbType[] types = new MySqlDbType[] { MySqlDbType.Int32, MySqlDbType.Int32 };
 
                         DBComunicator throughTableBase = new DBComunicator("cadeiras_sessoes");
-                        isOk = throughTableBase.ExecutarInsert(
+                        isOk = throughTableBase.ExecuteInsert(
                             new List<string>(fields),
                             new List<object>(values),
                             new List<MySqlDbType>(types));
@@ -126,9 +126,9 @@ namespace VotingControl
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateIdentificador = new Validator(this.Identificador, "identificador");
             validateIdentificador.Presence().LessOrEqualsThan(MaxCaracteres.Identificador).Uniqueness<Cadeira>();
@@ -138,8 +138,8 @@ namespace VotingControl
 
             if (!validateIdentificador.IsValid || !validateVereadorId.IsValid)
             {
-                base.AddMensagens(validateIdentificador.Errors);
-                base.AddMensagens(validateVereadorId.Errors);
+                base.AddMessages(validateIdentificador.Errors);
+                base.AddMessages(validateVereadorId.Errors);
                 return false;
             }
             else

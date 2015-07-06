@@ -60,10 +60,10 @@ namespace VotingControl
         /// Cria um novo vereador ou atualiza um vereador existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -72,27 +72,27 @@ namespace VotingControl
         /// Exclui um vereador existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Salva o objeto atual e seus respectivos relacionamentos de muitos para muitos
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool SalvarComRelacionamentos()
+        public bool SaveWithRelationship()
         {
-            if (this.Validar())
+            if (this.Validate())
             {
                 Program.Connection.Open();
                 bool isOk = false;
 
                 using (var transaction = Program.Connection.BeginTransaction())
                 {
-                    isOk = this.Salvar();
+                    isOk = this.Save();
                     int ultimoIdVereador = Convert.ToInt32(this.Select("LAST_INSERT_ID() as last_id")
-                        .BuscarEmDataTable()
+                        .SearchInDataTable()
                         .Rows[0]["last_id"]);
 
                     foreach (Suplente suplente in this.Suplentes)
@@ -100,13 +100,13 @@ namespace VotingControl
                         if (!isOk)
                             break;
                         
-                        isOk = suplente.Salvar();
+                        isOk = suplente.Save();
                     }
 
                     if (isOk)
                     {
                         int ultimoIdSuplente = Convert.ToInt32(this.Select("LAST_INSERT_ID() as last_id")
-                            .BuscarEmDataTable()
+                            .SearchInDataTable()
                             .Rows[0]["last_id"]);
 
                         string[] fields = new string[] { "suplente_id", "vereador_id" };
@@ -114,7 +114,7 @@ namespace VotingControl
                         MySqlDbType[] types = new MySqlDbType[] { MySqlDbType.Int32, MySqlDbType.Int32 };
 
                         DBComunicator throughTableBase = new DBComunicator("suplentes_vereadores");
-                        isOk = throughTableBase.ExecutarInsert(
+                        isOk = throughTableBase.ExecuteInsert(
                             new List<string>(fields),
                             new List<object>(values),
                             new List<MySqlDbType>(types));
@@ -137,9 +137,9 @@ namespace VotingControl
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateNome = new Validator(this.Nome, "nome");
             validateNome.Presence().LessOrEqualsThan(MaxCaracteres.Nome);
@@ -159,11 +159,11 @@ namespace VotingControl
             if (!validateNome.IsValid || !validateSexo.IsValid || !validateCpf.IsValid ||
                 !validatePartidoId.IsValid || !validateFoto.IsValid)
             {
-                base.AddMensagens(validateNome.Errors);
-                base.AddMensagens(validateSexo.Errors);
-                base.AddMensagens(validateCpf.Errors);
-                base.AddMensagens(validatePartidoId.Errors);
-                base.AddMensagens(validateFoto.Errors);
+                base.AddMessages(validateNome.Errors);
+                base.AddMessages(validateSexo.Errors);
+                base.AddMessages(validateCpf.Errors);
+                base.AddMessages(validatePartidoId.Errors);
+                base.AddMessages(validateFoto.Errors);
                 return false;
             }
             else

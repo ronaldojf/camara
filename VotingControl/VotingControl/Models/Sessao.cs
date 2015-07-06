@@ -52,10 +52,10 @@ namespace VotingControl
         /// Cria uma nova sessão ou atualiza uma sessão existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -64,18 +64,18 @@ namespace VotingControl
         /// Exclui uma sessão existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Salva o objeto atual e seus respectivos relacionamentos de muitos para muitos
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool SalvarComRelacionamentos()
+        public bool SaveWithRelationship()
         {
-            if (!this.Validar())
+            if (!this.Validate())
                 return false;
 
             Program.Connection.Open();
@@ -83,9 +83,9 @@ namespace VotingControl
 
             using (var transaction = Program.Connection.BeginTransaction())
             {
-                isOk = this.Salvar();
+                isOk = this.Save();
                 int ultimoIdSessao = Convert.ToInt32(this.Select("LAST_INSERT_ID() as last_id")
-                    .BuscarEmDataTable()
+                    .SearchInDataTable()
                     .Rows[0]["last_id"]);
 
                 foreach (Cadeira cadeira in this.Cadeiras)
@@ -93,13 +93,13 @@ namespace VotingControl
                     if (!isOk)
                         break;
 
-                    isOk = cadeira.Salvar();
+                    isOk = cadeira.Save();
                 }
 
                 if (isOk)
                 {
                     int ultimoIdCadeira = Convert.ToInt32(this.Select("LAST_INSERT_ID() as last_id")
-                        .BuscarEmDataTable()
+                        .SearchInDataTable()
                         .Rows[0]["last_id"]);
 
                     string[] fields = new string[] { "sessao_id", "cadeira_id" };
@@ -107,7 +107,7 @@ namespace VotingControl
                     MySqlDbType[] types = new MySqlDbType[] { MySqlDbType.Int32, MySqlDbType.Int32 };
 
                     DBComunicator throughTableBase = new DBComunicator("cadeiras_sessoes");
-                    isOk = throughTableBase.ExecutarInsert(
+                    isOk = throughTableBase.ExecuteInsert(
                         new List<string>(fields),
                         new List<object>(values),
                         new List<MySqlDbType>(types));
@@ -127,9 +127,9 @@ namespace VotingControl
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateTitulo = new Validator(this.Titulo, "titulo");
             validateTitulo.Presence().LessOrEqualsThan(MaxCaracteres.Titulo);
@@ -139,18 +139,18 @@ namespace VotingControl
 
             Validator validateInicio = new Validator(this.Inicio, "inicio");
             validateInicio.SameDateOfTodayOrGreater().LessThan(this.Fim);
-            base.AddMensagens(validateInicio.Errors);
+            base.AddMessages(validateInicio.Errors);
 
             Validator validateFim = new Validator(this.Fim, "fim");
             validateFim.SameDateOfTodayOrGreater().GreaterThan(this.Inicio);
-            base.AddMensagens(validateFim.Errors);
+            base.AddMessages(validateFim.Errors);
 
             if (!validateTitulo.IsValid || !validateTipo.IsValid || !validateInicio.IsValid || !validateFim.IsValid)
             {
-                base.AddMensagens(validateTitulo.Errors);
-                base.AddMensagens(validateTipo.Errors);
-                base.AddMensagens(validateInicio.Errors);
-                base.AddMensagens(validateFim.Errors);
+                base.AddMessages(validateTitulo.Errors);
+                base.AddMessages(validateTipo.Errors);
+                base.AddMessages(validateInicio.Errors);
+                base.AddMessages(validateFim.Errors);
                 return false;
             }
             else

@@ -9,7 +9,7 @@ namespace VotingControl
 {
     static class StringHelpers
     {
-        public static string RemoverAcentos(this string text)
+        public static string RemoveAccents(this string text)
         {
             text = Regex.Replace(text, "(á|à|ã|â|ä)", "a");
             text = Regex.Replace(text, "(é|è|ê|ë)", "e");

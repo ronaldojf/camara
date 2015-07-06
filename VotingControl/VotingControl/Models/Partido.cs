@@ -42,10 +42,10 @@ namespace VotingControl
         /// Cria um novo partido ou atualiza um partido existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -54,25 +54,25 @@ namespace VotingControl
         /// Exclui um partido existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateSigla = new Validator(this.Sigla, "sigla");
             validateSigla.Presence().LessOrEqualsThan(MaxCaracteres.Sigla).Uniqueness<Partido>();
 
             if (!validateSigla.IsValid)
             {
-                base.AddMensagens(validateSigla.Errors);
+                base.AddMessages(validateSigla.Errors);
                 return false;
             }
             else

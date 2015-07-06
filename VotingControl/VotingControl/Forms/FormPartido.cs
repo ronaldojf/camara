@@ -34,7 +34,7 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider1.SetError(txSigla, partido.MostrarMensagem("sigla"));
+            errorProvider1.SetError(txSigla, partido.ShowMessage("sigla"));
         }
 
         private void  AtualizarMaximoCaracteres()
@@ -49,7 +49,7 @@ namespace VotingControl
 
             RecuperarDadosTextbox();
             
-            if (this.partido.Salvar())
+            if (this.partido.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
@@ -57,8 +57,8 @@ namespace VotingControl
                 if (formVereadores != null)
                     formVereadores.AtualizarPartidos();
             }
-            else if (this.partido.PossuiErrosEm("criar"))
-                Decorator.MessageBoxError(this.partido.MostrarMensagem("criar"));
+            else if (this.partido.HasErrorsOn("criar"))
+                Decorator.MessageBoxError(this.partido.ShowMessage("criar"));
 
             AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);

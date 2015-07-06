@@ -33,8 +33,8 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider.SetError(txNome, suplente.MostrarMensagem("nome"));
-            errorProvider.SetError(mtxCpf, suplente.MostrarMensagem("cpf"));
+            errorProvider.SetError(txNome, suplente.ShowMessage("nome"));
+            errorProvider.SetError(mtxCpf, suplente.ShowMessage("cpf"));
         }
 
         private void AtualizarMaximoCaracteres()
@@ -49,13 +49,13 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.suplente.Salvar())
+            if (this.suplente.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
-            else if (this.suplente.PossuiErrosEm("criar"))
-                Decorator.MessageBoxError(this.suplente.MostrarMensagem("criar"));
+            else if (this.suplente.HasErrorsOn("criar"))
+                Decorator.MessageBoxError(this.suplente.ShowMessage("criar"));
 
             AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);

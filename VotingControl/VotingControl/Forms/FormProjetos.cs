@@ -32,9 +32,9 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider.SetError(txTitulo, this.projeto.MostrarMensagem("titulo"));
-            errorProvider.SetError(cbVereadores, this.projeto.MostrarMensagem("vereadores"));
-            errorProvider.SetError(cbSessao, this.projeto.MostrarMensagem("sessao"));
+            errorProvider.SetError(txTitulo, this.projeto.ShowMessage("titulo"));
+            errorProvider.SetError(cbVereadores, this.projeto.ShowMessage("vereadores"));
+            errorProvider.SetError(cbSessao, this.projeto.ShowMessage("sessao"));
         }
 
         private void RecuperarDadosTextBox()
@@ -75,13 +75,13 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.projeto.Salvar())
+            if (this.projeto.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
-            else if (this.projeto.PossuiErrosEm("criar"))
-                Decorator.MessageBoxError(this.projeto.MostrarMensagem("criar"));
+            else if (this.projeto.HasErrorsOn("criar"))
+                Decorator.MessageBoxError(this.projeto.ShowMessage("criar"));
 
             AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);

@@ -11,31 +11,31 @@ namespace VotingControl.Bases
     {
         public ErrorMessages()
         {
-            this.PossuiErro = false;
-            this.Erros = new DataTable();
-            this.Erros.Columns.Add("Atributo", typeof(string));
-            this.Erros.Columns.Add("Mensagem", typeof(string));
+            this.HasError = false;
+            this.Errors = new DataTable();
+            this.Errors.Columns.Add("Atributo", typeof(string));
+            this.Errors.Columns.Add("Mensagem", typeof(string));
         }
 
-        private DataTable Erros { get; set; }
-        private bool PossuiErro { get; set; }
+        private DataTable Errors { get; set; }
+        private bool HasError { get; set; }
 
         /// <summary>
         /// Mostra uma mensagem de erro de um atributo específico e depois a exclui.
         /// </summary>
-        /// <param name="nomeAtributo">Nome do atributo para procurar a mensagem</param>
+        /// <param name="attrName">Nome do atributo para procurar a mensagem</param>
         /// <returns>Retorna a mensagem de erro.</returns>
-        public string MostrarMensagem(string nomeAtributo)
+        public string ShowMessage(string attrName)
         {
             string msg = "";
 
-            foreach (DataRow row in this.Erros.Rows)
+            foreach (DataRow row in this.Errors.Rows)
             {
-                if (row["Atributo"].ToString().ToLower() == nomeAtributo.ToLower())
+                if (row["Atributo"].ToString().ToLower() == attrName.ToLower())
                 {
                     msg = row["Mensagem"].ToString();
                     row.Delete();
-                    this.PossuiErro = false;
+                    this.HasError = false;
                     break;
                 }
             }
@@ -46,58 +46,58 @@ namespace VotingControl.Bases
         /// <summary>
         /// Limpa erros armazenados
         /// </summary>
-        public void LimparErros()
+        public void ClearErrors()
         {
-            this.Erros.Clear();
-            this.PossuiErro = false;
+            this.Errors.Clear();
+            this.HasError = false;
         }
 
         /// <summary>
         /// Verifica se há algum erro em um atributo específico.
         /// </summary>
-        /// <param name="nomeAtributo">Nome do atributo</param>
+        /// <param name="attrName">Nome do atributo</param>
         /// <returns>Retorna true caso possua algum erro, senão retorna false</returns>
-        public bool PossuiErrosEm(string nomeAtributo)
+        public bool HasErrorsOn(string attrName)
         {
-            foreach (DataRow row in this.Erros.Rows)
+            foreach (DataRow row in this.Errors.Rows)
             {
-                if (row["Atributo"].ToString().ToLower() == nomeAtributo.ToLower())
+                if (row["Atributo"].ToString().ToLower() == attrName.ToLower())
                 {
-                    this.PossuiErro = true;
+                    this.HasError = true;
                     break;
                 }
                 else
-                    this.PossuiErro = false;
+                    this.HasError = false;
             }
 
-            return this.PossuiErro;
+            return this.HasError;
         }
 
         /// <summary>
         /// Verifica se há algum erro em qualquer atributo.
         /// </summary>
         /// <returns>Retorna true caso possua algum erro, senão retorna false</returns>
-        public bool PossuiErros()
+        public bool HasErrors()
         {
-            if (this.Erros.Rows.Count > 0)
-                this.PossuiErro = true;
+            if (this.Errors.Rows.Count > 0)
+                this.HasError = true;
 
-            return this.PossuiErro;
+            return this.HasError;
         }
 
         /// <summary>
         /// Adiciona uma mensagem de erro para um atributo
         /// </summary>
-        /// <param name="_nomeAtributo">Nome do atributo, será usado para buscar a mensagem de erro</param>
-        /// <param name="_mensagem">Mensagem de erro para o atributo</param>
-        public void AddMensagem(string _nomeAtributo, string _mensagem)
+        /// <param name="attrName">Nome do atributo, será usado para buscar a mensagem de erro</param>
+        /// <param name="message">Mensagem de erro para o atributo</param>
+        public void AddMessage(string attrName, string message)
         {
-            this.Erros.Rows.Add(new object[] { _nomeAtributo, _mensagem });
+            this.Errors.Rows.Add(new object[] { attrName, message });
         }
 
-        public void AddMensagens(DataTable validatorErrors)
+        public void AddMessages(DataTable validatorErrors)
         {
-            this.Erros.Merge(validatorErrors, true);
+            this.Errors.Merge(validatorErrors, true);
         }
     }
 }

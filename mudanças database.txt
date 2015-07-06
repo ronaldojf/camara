@@ -1,1 +1,0 @@
--> Trocado Tipo de valor na tabela sessoes, da coluna fim de VARCHAR para DATETIME;

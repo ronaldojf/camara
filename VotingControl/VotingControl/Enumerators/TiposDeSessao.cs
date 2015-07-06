@@ -14,7 +14,7 @@ namespace VotingControl
     
     public struct TiposDeSessaoHuman
     {
-        public static string[] Tipos = new string[]
+        public static string[] Types = new string[]
         {
             "Preparatória",
             "Ordinária",
@@ -25,14 +25,14 @@ namespace VotingControl
         };
                 
         //Retorna uma string contendo a definição do enumerado
-        public static string TextFor(TiposDeSessao tipo)
+        public static string TextFor(TiposDeSessao type)
         {
-            return Tipos[Convert.ToInt32(tipo)];
+            return Types[Convert.ToInt32(type)];
         }   
                
-        public static TiposDeSessao EnumFor(string tipoText)
+        public static TiposDeSessao EnumFor(string typeText)
         {
-            return (TiposDeSessao)Array.FindIndex<string>(Tipos, tipo => tipo == tipoText);
+            return (TiposDeSessao)Array.FindIndex<string>(Types, tipo => tipo == typeText);
         }
     }
 }

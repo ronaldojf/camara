@@ -50,10 +50,10 @@ namespace VotingControl
         /// Cria um novo projeto ou atualiza um projeto existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Salvar()
+        public bool Save()
         {
-            if (this.Validar())
-                return base.Salvar(this);
+            if (this.Validate())
+                return base.Save(this);
             else
                 return false;
         }
@@ -62,18 +62,18 @@ namespace VotingControl
         /// Exclui um projeto existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
-        public bool Deletar()
+        public bool Delete()
         {
-            return base.Deletar(this);
+            return base.Delete(this);
         }
 
         /// <summary>
         /// Verifica se os atributos possuem erros
         /// </summary>
         /// <returns>Retorna true se for válido, senão false</returns>
-        public bool Validar()
+        public bool Validate()
         {
-            base.LimparErros();
+            base.ClearErrors();
 
             Validator validateVereadorId = new Validator(this.VereadorId, "vereador_id").Presence();
             Validator validateSessaoId = new Validator(this.SessaoId, "sessao_id").Presence();
@@ -81,9 +81,9 @@ namespace VotingControl
 
             if (!validateVereadorId.IsValid || !validateSessaoId.IsValid || !validateTitulo.IsValid)
             {
-                base.AddMensagens(validateVereadorId.Errors);
-                base.AddMensagens(validateSessaoId.Errors);
-                base.AddMensagens(validateTitulo.Errors);
+                base.AddMessages(validateVereadorId.Errors);
+                base.AddMessages(validateSessaoId.Errors);
+                base.AddMessages(validateTitulo.Errors);
                 return false;
             }
             else

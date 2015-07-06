@@ -37,8 +37,8 @@ namespace VotingControl
 
         private void AlternarFormErros()
         {
-            errorProvider.SetError(txIdentificador, this.cadeira.MostrarMensagem("identificador"));
-            errorProvider.SetError(cbVereadores, this.cadeira.MostrarMensagem("vereador_id"));
+            errorProvider.SetError(txIdentificador, this.cadeira.ShowMessage("identificador"));
+            errorProvider.SetError(cbVereadores, this.cadeira.ShowMessage("vereador_id"));
         }
 
         private void AtualizarMaximoCaracteres()
@@ -53,13 +53,13 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.cadeira.Salvar())
+            if (this.cadeira.Save())
             {
                 btLimpar_Click(sender, e);
                 Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
-            else if (this.cadeira.PossuiErrosEm("criar"))
-                Decorator.MessageBoxError(this.cadeira.MostrarMensagem("criar"));
+            else if (this.cadeira.HasErrorsOn("criar"))
+                Decorator.MessageBoxError(this.cadeira.ShowMessage("criar"));
 
             AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);
