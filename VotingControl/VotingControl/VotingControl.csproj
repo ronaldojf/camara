@@ -131,6 +131,7 @@
     <Compile Include="Models\Vereador.cs" />
     <Compile Include="Models\Voto.cs" />
     <Compile Include="Others\Decorator.cs" />
+    <Compile Include="Others\StringHelpers.cs" />
     <Compile Include="Others\Verbos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -53,22 +53,16 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.cadeira.PossuiErros())
-                AlternarFormErros();
-            else
+            if (this.cadeira.Salvar())
             {
-                AlternarFormErros();
-
-                if (this.cadeira.Salvar())
-                {
-                    btLimpar_Click(sender, e);
-                    Decorator.MessageBoxSuccess("Registro criado com sucesso!");
-                }
-                else
-                    Decorator.MessageBoxError(this.cadeira.MostrarMensagem("criar"));
-
-                Decorator.FocusOnFirstTextBox(pnContent.Controls);
+                btLimpar_Click(sender, e);
+                Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
+            else if (this.cadeira.PossuiErrosEm("criar"))
+                Decorator.MessageBoxError(this.cadeira.MostrarMensagem("criar"));
+
+            AlternarFormErros();
+            Decorator.FocusOnFirstTextBox(pnContent.Controls);
         }
 
         private void btLimpar_Click(object sender, EventArgs e)

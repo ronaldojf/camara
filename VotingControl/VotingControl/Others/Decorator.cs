@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 namespace VotingControl
@@ -111,12 +112,15 @@ namespace VotingControl
         public static AutoCompleteStringCollection AutoCompleteFor(string text, DataTable dataTable)
         {
             AutoCompleteStringCollection autoComplete = new AutoCompleteStringCollection();
+            text = text.ToLower().RemoverAcentos();
 
             for (int i1 = 0; i1 < dataTable.Rows.Count; i1++)
             {
                 for (int i2 = 0; i2 < dataTable.Rows[i1].ItemArray.Length; i2++)
                 {
-                    if (dataTable.Rows[i1][i2].ToString().ToLower().Contains(text.ToLower()))
+                    string baseString = dataTable.Rows[i1][i2].ToString().ToLower().RemoverAcentos();
+
+                    if (baseString.Contains(text))
                         autoComplete.Add(dataTable.Rows[i1][i2].ToString());
                 }
             }

@@ -14,10 +14,6 @@ namespace VotingControl
     [Table("projetos")]
     public class Projeto : ActiveRecorder<Projeto>
     {
-        private int _vereadorId;
-        private int _sessaoId;
-        private string _titulo;
-
         /// <summary>
         /// Inicializa uma nova instância de Projeto
         /// </summary>
@@ -42,52 +38,13 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("vereador_id")]
-        public int VereadorId
-        {
-            get { return this._vereadorId; }
-            set
-            {
-                Validator validate = new Validator(value, "vereador_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._vereadorId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public int VereadorId { get; set; }
 
         [Column("sessao_id")]
-        public int SessaoId
-        {
-            get { return this._sessaoId; }
-            set
-            {
-                Validator validate = new Validator(value, "sessao_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._sessaoId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public int SessaoId { get; set; }
 
         [Column("titulo")]
-        public string Titulo
-        {
-            get { return this._titulo; }
-            set
-            {
-                Validator validate = new Validator(value, "titulo");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Titulo);
-
-                if (validate.IsValid)
-                    this._titulo = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Titulo { get; set; }
 
         /// <summary>
         /// Cria um novo projeto ou atualiza um projeto existente
@@ -95,7 +52,10 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            return base.Salvar(this);
+            if (this.Validar())
+                return base.Salvar(this);
+            else
+                return false;
         }
 
         /// <summary>
@@ -105,6 +65,29 @@ namespace VotingControl
         public bool Deletar()
         {
             return base.Deletar(this);
+        }
+
+        /// <summary>
+        /// Verifica se os atributos possuem erros
+        /// </summary>
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
+        {
+            base.LimparErros();
+
+            Validator validateVereadorId = new Validator(this.VereadorId, "vereador_id").Presence();
+            Validator validateSessaoId = new Validator(this.SessaoId, "sessao_id").Presence();
+            Validator validateTitulo = new Validator(this.Titulo, "titulo").Presence().LessOrEqualsThan(MaxCaracteres.Titulo);
+
+            if (!validateVereadorId.IsValid || !validateSessaoId.IsValid || !validateTitulo.IsValid)
+            {
+                base.AddMensagens(validateVereadorId.Errors);
+                base.AddMensagens(validateSessaoId.Errors);
+                base.AddMensagens(validateTitulo.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace VotingControl
 
             public static string GreaterThan(DateTime datetime)
             {
-                return "precisa ser maior que" + datetime.ToShortDateString() + " " + datetime.ToShortTimeString();
+                return "precisa ser maior que " + datetime.ToShortDateString() + " " + datetime.ToShortTimeString();
             }
 
             public static string GreaterOrEqualsThan(double quantity, string type)
@@ -107,7 +107,7 @@ namespace VotingControl
 
             public static string LessThan(DateTime datetime)
             {
-                return "precisa ser menor que" + datetime.ToShortDateString() + " " + datetime.ToShortTimeString();
+                return "precisa ser menor que " + datetime.ToShortDateString() + " " + datetime.ToShortTimeString();
             }
 
             public static string LessOrEqualsThan(double quantity, string type)

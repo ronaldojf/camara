@@ -48,22 +48,20 @@ namespace VotingControl
             this.Refresh();
 
             RecuperarDadosTextbox();
-
-            if (this.partido.PossuiErros())
-                AlternarFormErros();
-            else
+            
+            if (this.partido.Salvar())
             {
-                if (this.partido.Salvar())
-                {
-                    btLimpar_Click(sender, e);
-                    Decorator.MessageBoxSuccess("Registro criado com sucesso!");
-                    formVereadores.AtualizarPartidos();
-                }
-                else
-                    Decorator.MessageBoxError(this.partido.MostrarMensagem("criar"));
+                btLimpar_Click(sender, e);
+                Decorator.MessageBoxSuccess("Registro criado com sucesso!");
 
-                Decorator.FocusOnFirstTextBox(pnContent.Controls);
+                if (formVereadores != null)
+                    formVereadores.AtualizarPartidos();
             }
+            else if (this.partido.PossuiErrosEm("criar"))
+                Decorator.MessageBoxError(this.partido.MostrarMensagem("criar"));
+
+            AlternarFormErros();
+            Decorator.FocusOnFirstTextBox(pnContent.Controls);
         }
 
         private void btLimpar_Click(object sender, EventArgs e)

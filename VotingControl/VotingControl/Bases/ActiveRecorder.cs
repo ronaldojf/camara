@@ -213,10 +213,8 @@ namespace VotingControl.Bases
 
                 object primaryKeyValue = primaryKey.GetValue(objetoDaClasse);
 
-                string primaryKeyName = primaryKey.GetType()
-                    .GetCustomAttribute<ColumnAttribute>()
-                    .Name;
-
+                string primaryKeyName = primaryKey.Name;
+                
                 if (Int32.TryParse(primaryKeyValue.ToString(), out resultId))
                     return base.ExecutarDelete(primaryKeyName, resultId);
                 else

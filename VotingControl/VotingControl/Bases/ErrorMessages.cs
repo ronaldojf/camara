@@ -49,6 +49,7 @@ namespace VotingControl.Bases
         public void LimparErros()
         {
             this.Erros.Clear();
+            this.PossuiErro = false;
         }
 
         /// <summary>

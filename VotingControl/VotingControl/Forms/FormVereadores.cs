@@ -80,20 +80,15 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.vereador.PossuiErros())
-                AlternarFormErros();
-            else
+            if (this.vereador.Salvar())
             {
-                if (this.vereador.Salvar())
-                {
-                    AlternarFormErros();
-                    btLimpar_Click(sender, e);
-                    Decorator.MessageBoxSuccess("Registro gravado com sucesso.");
-                }
-                else
-                    Decorator.MessageBoxError(this.vereador.MostrarMensagem("criar"));
+                btLimpar_Click(sender, e);
+                Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
+            else if (this.vereador.PossuiErrosEm("criar"))
+                Decorator.MessageBoxError(this.vereador.MostrarMensagem("criar"));
 
+            AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);
             this.Cursor = Cursors.Default;
         }

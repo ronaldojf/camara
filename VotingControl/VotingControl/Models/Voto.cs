@@ -14,11 +14,6 @@ namespace VotingControl
     [Table("votos")]
     public class Voto : ActiveRecorder<Voto>
     {
-        private TiposDeVoto _tipo { get; set; }
-        private int _projetoId { get; set; }
-        private int _vereadorId { get; set; }
-        private int _sessaoId { get; set; }
-
         /// <summary>
         /// Inicializa uma nova instância de Voto
         /// </summary>
@@ -37,76 +32,26 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("tipo", Type = MySqlDbType.Int32)]
-        public TiposDeVoto Tipo
-        {
-            get { return _tipo; }
-            set
-            {
-                Validator validate = new Validator(value, "tipo");
-                validate.Presence(true);
-
-                if (validate.IsValid)
-                    this._tipo = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public TiposDeVoto Tipo { get; set; }
 
         [Column("projeto_id")]
-        public int ProjetoId
-        {
-            get { return _projetoId; }
-            set
-            {
-                Validator validate = new Validator(value, "projeto_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._projetoId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public int ProjetoId { get; set; }
 
         [Column("vereador_id")]
-        public int VereadorId
-        {
-            get { return _vereadorId; }
-            set
-            {
-                Validator validate = new Validator(value, "vereador_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._vereadorId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public int VereadorId { get; set; }
 
         [Column("sessao_id")]
-        public int SessaoId
-        {
-            get { return _sessaoId; }
-            set
-            {
-                Validator validate = new Validator(value, "sessao_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._sessaoId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
-
+        public int SessaoId { get; set; }
         /// <summary>
         /// Cria um novo voto ou atualiza um voto existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            return base.Salvar(this);
+            if (this.Validar())
+                return base.Salvar(this);
+            else
+                return false;
         }
 
         /// <summary>
@@ -116,6 +61,38 @@ namespace VotingControl
         public bool Deletar()
         {
             return base.Deletar(this);
+        }
+
+        /// <summary>
+        /// Verifica se os atributos possuem erros
+        /// </summary>
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
+        {
+            base.LimparErros();
+
+            Validator validateTipo = new Validator(this.Tipo, "tipo");
+            validateTipo.Presence(true);
+
+            Validator validateProjetoId = new Validator(this.ProjetoId, "projeto_id");
+            validateProjetoId.Presence();
+
+            Validator validateVereadorId = new Validator(this.VereadorId, "vereador_id");
+            validateVereadorId.Presence();
+
+            Validator validateSessaoId = new Validator(this.SessaoId, "sessao_id");
+            validateSessaoId.Presence();
+
+            if (validateTipo.IsValid || validateProjetoId.IsValid || validateVereadorId.IsValid || validateSessaoId.IsValid)
+            {
+                base.AddMensagens(validateTipo.Errors);
+                base.AddMensagens(validateProjetoId.Errors);
+                base.AddMensagens(validateVereadorId.Errors);
+                base.AddMensagens(validateSessaoId.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

@@ -67,7 +67,7 @@
             this.btCadastar.Name = "btCadastar";
             this.btCadastar.Size = new System.Drawing.Size(195, 41);
             this.btCadastar.TabIndex = 2;
-            this.btCadastar.Text = "Cadastrar";
+            this.btCadastar.Text = "Gravar";
             this.btCadastar.UseVisualStyleBackColor = true;
             this.btCadastar.Click += new System.EventHandler(this.btCadastar_Click);
             // 
@@ -166,7 +166,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.CancelButton = this.btLimpar;
-            this.ClientSize = new System.Drawing.Size(462, 232);
+            this.ClientSize = new System.Drawing.Size(462, 230);
             this.Controls.Add(this.pnFooter);
             this.Controls.Add(this.pnContent);
             this.Controls.Add(this.pnHeader);

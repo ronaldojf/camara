@@ -14,11 +14,6 @@ namespace VotingControl
     [Table("sessoes")]
     public class Sessao : ActiveRecorder<Sessao>
     {
-        private string _titulo;
-        private TiposDeSessao _tipo;
-        private DateTime _inicio;
-        private DateTime _fim;
-
         /// <summary>
         /// Inicializa uma nova instância de Sessão
         /// </summary>
@@ -43,68 +38,15 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("titulo")]
-        public string Titulo
-        {
-            get { return this._titulo; }
-            set
-            {
-                Validator validate = new Validator(value, "titulo");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Titulo);
-
-                if (validate.IsValid)
-                    this._titulo = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
-
+        public string Titulo { get; set; }
         [Column("tipo", Type = MySqlDbType.Int32)]
-        public TiposDeSessao Tipo
-        {
-            get { return this._tipo; }
-            set
-            {
-                Validator validate = new Validator(value, "tipo");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._tipo = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public TiposDeSessao Tipo { get; set; }
 
         [Column("inicio")]
-        public DateTime Inicio
-        {
-            get { return this._inicio; }
-            set
-            {
-                Validator validate = new Validator(value, "inicio");
-                validate.SameDateOfTodayOrGreater().LessOrEqualsThan(this._fim);
-
-                if (validate.IsValid)
-                    this._inicio = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public DateTime Inicio { get; set; }
 
         [Column("fim")]
-        public DateTime Fim
-        {
-            get { return this._fim; }
-            set
-            {
-                Validator validate = new Validator(value, "fim");
-                validate.SameDateOfTodayOrGreater().GreaterThan(this._inicio);
-
-                if (validate.IsValid)
-                    this._fim = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public DateTime Fim { get; set; }
 
         /// <summary>
         /// Cria uma nova sessão ou atualiza uma sessão existente
@@ -112,7 +54,10 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            return base.Salvar(this);
+            if (this.Validar())
+                return base.Salvar(this);
+            else
+                return false;
         }
 
         /// <summary>
@@ -130,6 +75,9 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool SalvarComRelacionamentos()
         {
+            if (!this.Validar())
+                return false;
+
             Program.Connection.Open();
             bool isOk = false;
 
@@ -173,6 +121,40 @@ namespace VotingControl
 
             Program.Connection.Close();
             return isOk;
+        }
+
+        /// <summary>
+        /// Verifica se os atributos possuem erros
+        /// </summary>
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
+        {
+            base.LimparErros();
+
+            Validator validateTitulo = new Validator(this.Titulo, "titulo");
+            validateTitulo.Presence().LessOrEqualsThan(MaxCaracteres.Titulo);
+
+            Validator validateTipo = new Validator(this.Tipo, "tipo");
+            validateTipo.Presence();
+
+            Validator validateInicio = new Validator(this.Inicio, "inicio");
+            validateInicio.SameDateOfTodayOrGreater().LessThan(this.Fim);
+            base.AddMensagens(validateInicio.Errors);
+
+            Validator validateFim = new Validator(this.Fim, "fim");
+            validateFim.SameDateOfTodayOrGreater().GreaterThan(this.Inicio);
+            base.AddMensagens(validateFim.Errors);
+
+            if (!validateTitulo.IsValid || !validateTipo.IsValid || !validateInicio.IsValid || !validateFim.IsValid)
+            {
+                base.AddMensagens(validateTitulo.Errors);
+                base.AddMensagens(validateTipo.Errors);
+                base.AddMensagens(validateInicio.Errors);
+                base.AddMensagens(validateFim.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

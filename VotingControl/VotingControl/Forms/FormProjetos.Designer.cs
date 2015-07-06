@@ -49,7 +49,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.vereadoresTableAdapter = new VotingControl.votingcontrolDataSetTableAdapters.vereadoresTableAdapter();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
             this.sessoesTableAdapter = new VotingControl.votingcontrolDataSetTableAdapters.sessoesTableAdapter();
             this.panel3.SuspendLayout();
             this.pnContent.SuspendLayout();
@@ -58,7 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.vereadoresBindingSource)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // panel3
@@ -69,7 +69,7 @@
             this.panel3.Location = new System.Drawing.Point(2, 207);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(650, 62);
-            this.panel3.TabIndex = 22;
+            this.panel3.TabIndex = 2;
             // 
             // btCadastar
             // 
@@ -111,7 +111,7 @@
             this.pnContent.Location = new System.Drawing.Point(2, 73);
             this.pnContent.Name = "pnContent";
             this.pnContent.Size = new System.Drawing.Size(650, 132);
-            this.pnContent.TabIndex = 20;
+            this.pnContent.TabIndex = 1;
             // 
             // label3
             // 
@@ -213,7 +213,7 @@
             this.panel1.Location = new System.Drawing.Point(2, 2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(650, 69);
-            this.panel1.TabIndex = 21;
+            this.panel1.TabIndex = 3;
             // 
             // btAbrirLista
             // 
@@ -222,7 +222,7 @@
             this.btAbrirLista.Location = new System.Drawing.Point(549, 8);
             this.btAbrirLista.Name = "btAbrirLista";
             this.btAbrirLista.Size = new System.Drawing.Size(75, 50);
-            this.btAbrirLista.TabIndex = 6;
+            this.btAbrirLista.TabIndex = 20;
             this.btAbrirLista.UseVisualStyleBackColor = true;
             this.btAbrirLista.Click += new System.EventHandler(this.btAbrirLista_Click);
             // 
@@ -250,9 +250,9 @@
             // 
             this.vereadoresTableAdapter.ClearBeforeFill = true;
             // 
-            // errorProvider1
+            // errorProvider
             // 
-            this.errorProvider1.ContainerControl = this;
+            this.errorProvider.ContainerControl = this;
             // 
             // sessoesTableAdapter
             // 
@@ -288,7 +288,7 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -311,7 +311,7 @@
         private votingcontrolDataSet votingcontrolDataSet;
         private System.Windows.Forms.BindingSource vereadoresBindingSource;
         private votingcontrolDataSetTableAdapters.vereadoresTableAdapter vereadoresTableAdapter;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbSessao;
         private System.Windows.Forms.BindingSource sessoesBindingSource;

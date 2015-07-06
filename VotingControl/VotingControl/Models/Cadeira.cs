@@ -14,9 +14,6 @@ namespace VotingControl
     [Table("cadeiras")]
     public class Cadeira : ActiveRecorder<Cadeira>
     {
-        private string _identificador;
-        private int _vereadorId;
-
         /// <summary>
         /// Inicializa uma nova instância de Cadeira
         /// </summary>
@@ -43,36 +40,10 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("identificador")]
-        public string Identificador
-        {
-            get { return this._identificador; }
-            set
-            {
-                Validator validate = new Validator(value, "identificador");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Identificador);
-
-                if (validate.IsValid)
-                    this._identificador = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Identificador { get; set; }
 
         [Column("vereador_id")]
-        public int VereadorId
-        {
-            get { return this._vereadorId; }
-            set
-            {
-                Validator validate = new Validator(value, "vereador_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._vereadorId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public int VereadorId { get; set; }
 
         /// <summary>
         /// Cria um nova cadeira ou atualiza uma cadeira existente
@@ -80,7 +51,7 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            if (this.UnicidadeIdentificador())
+            if (this.Validar())
                 return base.Salvar(this);
             else
                 return false;
@@ -101,7 +72,7 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool SalvarComRelacionamentos()
         {
-            if (this.UnicidadeIdentificador())
+            if (this.Validar())
             {
                 Program.Connection.Open();
                 bool isOk = false;
@@ -152,12 +123,27 @@ namespace VotingControl
         }
 
         /// <summary>
-        /// Valida se o indicador é único no banco de dados
+        /// Verifica se os atributos possuem erros
         /// </summary>
-        /// <returns>Retorna true se não existir, senão false</returns>
-        public bool UnicidadeIdentificador()
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
         {
-            return new Validator(this._identificador, "identificador").Uniqueness<Cadeira>().IsValid;
+            base.LimparErros();
+
+            Validator validateIdentificador = new Validator(this.Identificador, "identificador");
+            validateIdentificador.Presence().LessOrEqualsThan(MaxCaracteres.Identificador).Uniqueness<Cadeira>();
+
+            Validator validateVereadorId = new Validator(this.VereadorId, "vereador_id");
+            validateVereadorId.Presence();
+
+            if (!validateIdentificador.IsValid || !validateVereadorId.IsValid)
+            {
+                base.AddMensagens(validateIdentificador.Errors);
+                base.AddMensagens(validateVereadorId.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace VotingControl
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormPrincipal("Ronaldo"));
+            Application.Run(new FormProjetos());
         }
     }
 }

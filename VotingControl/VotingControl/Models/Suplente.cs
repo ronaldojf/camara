@@ -14,9 +14,6 @@ namespace VotingControl
     [Table("suplentes")]
     public class Suplente : ActiveRecorder<Suplente>
     {
-        private string _nome { get; set; }
-        private string _cpf { get; set; }
-
         /// <summary>
         /// Inicializa uma nova instância de Suplente
         /// </summary>
@@ -41,36 +38,10 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("nome")]
-        public string Nome
-        {
-            get { return _nome; }
-            set
-            {
-                Validator validate = new Validator(value, "nome");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Nome);
-
-                if (validate.IsValid)
-                    this._nome = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Nome { get; set; }
 
         [Column("cpf")]
-        public string Cpf
-        {
-            get { return _cpf; }
-            set
-            {
-                Validator validate = new Validator(value, "cpf");
-                validate.Presence().CpfVerification();
-
-                if (validate.IsValid)
-                    this._cpf = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Cpf { get; set; }
 
         /// <summary>
         /// Cria um novo suplente ou atualiza um suplente existente
@@ -78,7 +49,7 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            if (this.UnicidadeCpf())
+            if (this.Validar())
                 return base.Salvar(this);
             else
                 return false;
@@ -99,7 +70,7 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool SalvarComRelacionamentos()
         {
-            if (this.UnicidadeCpf())
+            if (this.Validar())
             {
                 Program.Connection.Open();
                 bool isOk = false;
@@ -150,12 +121,27 @@ namespace VotingControl
         }
 
         /// <summary>
-        /// Valida se o CPF é único no banco de dados
+        /// Verifica se os atributos possuem erros
         /// </summary>
-        /// <returns>Retorna true se não existir, senão false</returns>
-        public bool UnicidadeCpf()
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
         {
-            return new Validator(this._cpf, "cpf").Uniqueness<Suplente>().IsValid;
+            base.LimparErros();
+
+            Validator validateNome = new Validator(this.Nome, "nome");
+            validateNome.Presence().LessOrEqualsThan(MaxCaracteres.Nome);
+
+            Validator validateCpf = new Validator(this.Cpf, "cpf");
+            validateCpf.Presence().CpfVerification().Uniqueness<Suplente>();
+
+            if (!validateNome.IsValid || !validateCpf.IsValid)
+            {
+                base.AddMensagens(validateNome.Errors);
+                base.AddMensagens(validateCpf.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

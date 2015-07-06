@@ -19,7 +19,7 @@ namespace VotingControl
             InitializeComponent();
             AtualizarMaximoCaracteres();
             cbTipo.Items.AddRange(TiposDeSessaoHuman.Tipos);
-
+            
             this.sessao = new Sessao();
         }
 
@@ -46,27 +46,20 @@ namespace VotingControl
 
         private void btCadastar_Click(object sender, EventArgs e)
         {
-            
             Cursor.Current = Cursors.AppStarting;
             this.Refresh();
 
             RecuperarDadosTextBox();
 
-            if (this.sessao.PossuiErros())
-                AlternarFormErros();
-            else
+            if (this.sessao.Salvar())
             {
-                AlternarFormErros();
-
-                if (this.sessao.Salvar())
-                {
-                    btLimpar_Click(sender, e);
-                    Decorator.MessageBoxSuccess("Registro criado com sucesso!");
-                }
-                else
-                    Decorator.MessageBoxError(this.sessao.MostrarMensagem("criar"));
+                btLimpar_Click(sender, e);
+                Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
+            else if (this.sessao.PossuiErrosEm("criar"))
+                Decorator.MessageBoxError(this.sessao.MostrarMensagem("criar"));
 
+            AlternarFormErros();
             Decorator.FocusOnFirstTextBox(pnContent.Controls);
         }
        

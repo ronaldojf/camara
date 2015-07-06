@@ -14,12 +14,6 @@ namespace VotingControl
     [Table("vereadores")]
     public class Vereador : ActiveRecorder<Vereador>
     {
-        private string _nome { get; set; }
-        private Sexos _sexo { get; set; }
-        private string _cpf { get; set; }
-        private int _partidoId { get; set; }
-        private string _foto { get; set; }
-
         /// <summary>
         /// Inicializa uma nova instância de Vereador
         /// </summary>
@@ -49,92 +43,26 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("nome")]
-        public string Nome
-        {
-            get { return _nome; }
-            set
-            {
-                Validator validate = new Validator(value, "nome");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Nome);
-
-                if (validate.IsValid)
-                    this._nome = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Nome { get; set; }
 
         [Column("sexo", Type = MySqlDbType.Int32)]
-        public Sexos Sexo
-        {
-            get { return _sexo; }
-            set
-            {
-                Validator validate = new Validator(value, "sexo");
-                validate.Presence(true);
-
-                if (validate.IsValid)
-                    this._sexo = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public Sexos Sexo { get; set; }
 
         [Column("cpf")]
-        public string Cpf
-        {
-            get { return _cpf; }
-            set
-            {
-                Validator validate = new Validator(value, "cpf");
-                validate.Presence().CpfVerification();
+        public string Cpf { get; set; }
 
-                if (validate.IsValid)
-                    this._cpf = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
-
-        [Column("partido_id")]
-        public int PartidoId
-        {
-            get { return _partidoId; }
-            set
-            {
-                Validator validate = new Validator(value, "partido_id");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._partidoId = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public int PartidoId { get; set; }
 
         [Column("foto")]
-        public string Foto
-        {
-            get { return _foto; }
-            set
-            {
-                Validator validate = new Validator(value, "foto");
-                validate.Presence();
-
-                if (validate.IsValid)
-                    this._foto = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
-
+        public string Foto { get; set; }
+        
         /// <summary>
         /// Cria um novo vereador ou atualiza um vereador existente
         /// </summary>
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            if (this.UnicidadeCpf())
+            if (this.Validar())
                 return base.Salvar(this);
             else
                 return false;
@@ -155,7 +83,7 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool SalvarComRelacionamentos()
         {
-            if (this.UnicidadeCpf())
+            if (this.Validar())
             {
                 Program.Connection.Open();
                 bool isOk = false;
@@ -206,12 +134,40 @@ namespace VotingControl
         }
 
         /// <summary>
-        /// Valida se o CPF é único no banco de dados
+        /// Verifica se os atributos possuem erros
         /// </summary>
-        /// <returns>Retorna true se não existir, senão false</returns>
-        public bool UnicidadeCpf()
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
         {
-            return new Validator(this._cpf, "cpf").Uniqueness<Vereador>().IsValid;
+            base.LimparErros();
+
+            Validator validateNome = new Validator(this.Nome, "nome");
+            validateNome.Presence().LessOrEqualsThan(MaxCaracteres.Nome);
+
+            Validator validateSexo = new Validator(this.Sexo, "sexo");
+            validateSexo.Presence(true);
+
+            Validator validateCpf = new Validator(this.Cpf, "cpf");
+            validateCpf.Presence().CpfVerification().Uniqueness<Vereador>();
+
+            Validator validatePartidoId = new Validator(this.PartidoId, "partido_id");
+            validatePartidoId.Presence();
+
+            Validator validateFoto = new Validator(this.Foto, "foto");
+            validateFoto.Presence();
+
+            if (!validateNome.IsValid || !validateSexo.IsValid || !validateCpf.IsValid ||
+                !validatePartidoId.IsValid || !validateFoto.IsValid)
+            {
+                base.AddMensagens(validateNome.Errors);
+                base.AddMensagens(validateSexo.Errors);
+                base.AddMensagens(validateCpf.Errors);
+                base.AddMensagens(validatePartidoId.Errors);
+                base.AddMensagens(validateFoto.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

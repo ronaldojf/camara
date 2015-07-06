@@ -14,8 +14,6 @@ namespace VotingControl
     [Table("partidos")]
     public class Partido : ActiveRecorder<Partido>
     {
-        private string _sigla;
-        
         /// <summary>
         /// Inicializa uma nova instância de Partido
         /// </summary>
@@ -38,20 +36,7 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("sigla")]
-        public string Sigla
-        {
-            get { return this._sigla; }
-            set
-            {
-                Validator validate = new Validator(value, "sigla");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Sigla);
-
-                if (validate.IsValid)
-                    this._sigla = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Sigla { get; set; }
 
         /// <summary>
         /// Cria um novo partido ou atualiza um partido existente
@@ -59,7 +44,7 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            if (this.UnicidadeSigla())
+            if (this.Validar())
                 return base.Salvar(this);
             else
                 return false;
@@ -75,12 +60,23 @@ namespace VotingControl
         }
 
         /// <summary>
-        /// Valida se a sigla é única no banco de dados
+        /// Verifica se os atributos possuem erros
         /// </summary>
-        /// <returns>Retorna true se não existir, senão false</returns>
-        public bool UnicidadeSigla()
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
         {
-            return new Validator(this._sigla, "sigla").Uniqueness<Partido>().IsValid;
+            base.LimparErros();
+
+            Validator validateSigla = new Validator(this.Sigla, "sigla");
+            validateSigla.Presence().LessOrEqualsThan(MaxCaracteres.Sigla).Uniqueness<Partido>();
+
+            if (!validateSigla.IsValid)
+            {
+                base.AddMensagens(validateSigla.Errors);
+                return false;
+            }
+            else
+                return true;
         }
     }
 }

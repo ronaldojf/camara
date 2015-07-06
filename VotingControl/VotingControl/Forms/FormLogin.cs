@@ -33,8 +33,8 @@ namespace VotingControl
                 "Erro ao realizar acesso",
                 MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 
-                Decorator.ClearControls(pnContent.Controls);
-                Decorator.FocusOnFirstTextBox(pnContent.Controls);
+                txSenha.Clear();
+                txSenha.Focus();
             }
         }
 

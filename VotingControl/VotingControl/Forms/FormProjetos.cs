@@ -30,11 +30,11 @@ namespace VotingControl
             this.projeto = new Projeto();
         }
 
-        private void AlternarFormsErros()
+        private void AlternarFormErros()
         {
-            errorProvider1.SetError(txTitulo, this.projeto.MostrarMensagem("titulo"));
-            errorProvider1.SetError(cbVereadores, this.projeto.MostrarMensagem("vereadores"));
-            errorProvider1.SetError(cbSessao, this.projeto.MostrarMensagem("sessao"));
+            errorProvider.SetError(txTitulo, this.projeto.MostrarMensagem("titulo"));
+            errorProvider.SetError(cbVereadores, this.projeto.MostrarMensagem("vereadores"));
+            errorProvider.SetError(cbSessao, this.projeto.MostrarMensagem("sessao"));
         }
 
         private void RecuperarDadosTextBox()
@@ -50,7 +50,7 @@ namespace VotingControl
 
         private void btCadastrarVereador_Click(object sender, EventArgs e)
         {
-            Decorator.OpenForm(new FormVereadores());
+            Decorator.OpenForm(new FormVereadores(), true);
         }
 
         private void cbVereadores_TextChanged(object sender, EventArgs e)
@@ -75,22 +75,16 @@ namespace VotingControl
 
             RecuperarDadosTextBox();
 
-            if (this.projeto.PossuiErros())
-                AlternarFormsErros();
-            else
+            if (this.projeto.Salvar())
             {
-                AlternarFormsErros();
-
-                if (this.projeto.Salvar())
-                {
-                    btLimpar_Click(sender, e);
-                    Decorator.MessageBoxSuccess("Registro realizado com sucesso!");
-                }
-                else
-                    Decorator.MessageBoxError(this.projeto.MostrarMensagem("criar"));
-
-                Decorator.FocusOnFirstTextBox(pnContent.Controls);
+                btLimpar_Click(sender, e);
+                Decorator.MessageBoxSuccess("Registro criado com sucesso!");
             }
+            else if (this.projeto.PossuiErrosEm("criar"))
+                Decorator.MessageBoxError(this.projeto.MostrarMensagem("criar"));
+
+            AlternarFormErros();
+            Decorator.FocusOnFirstTextBox(pnContent.Controls);
         }
 
         private void btAbrirLista_Click(object sender, EventArgs e)

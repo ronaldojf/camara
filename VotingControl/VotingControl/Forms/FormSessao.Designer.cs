@@ -115,7 +115,7 @@
             // 
             // dtpFimSessao
             // 
-            this.dtpFimSessao.CustomFormat = "dd/MM/yyyy hh:mm";
+            this.dtpFimSessao.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtpFimSessao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFimSessao.Location = new System.Drawing.Point(438, 92);
             this.dtpFimSessao.Name = "dtpFimSessao";
@@ -124,7 +124,7 @@
             // 
             // dtpInicioSessao
             // 
-            this.dtpInicioSessao.CustomFormat = "dd/MM/yyyy hh:mm";
+            this.dtpInicioSessao.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dtpInicioSessao.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpInicioSessao.Location = new System.Drawing.Point(229, 92);
             this.dtpInicioSessao.Name = "dtpInicioSessao";

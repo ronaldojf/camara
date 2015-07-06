@@ -14,9 +14,6 @@ namespace VotingControl
     [Table("administradores")]
     public class Administrador : ActiveRecorder<Administrador>
     {
-        private string _usuario;
-        private string _senha;
-
         /// <summary>
         /// Inicializa uma nova instância de Administrador
         /// </summary>
@@ -36,36 +33,10 @@ namespace VotingControl
         public int Id { get; set; }
 
         [Column("usuario")]
-        public string Usuario
-        {
-            get { return this._usuario; }
-            set
-            {
-                Validator validate = new Validator(value, "usuario");
-                validate.Presence().LessOrEqualsThan(MaxCaracteres.Usuario).Uniqueness<Administrador>();
-
-                if (validate.IsValid)
-                    this._usuario = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Usuario { get; set; }
 
         [Column("senha")]
-        public string Senha
-        {
-            get { return this._senha; }
-            set
-            {
-                Validator validate = new Validator(value, "senha");
-                validate.Presence().Between(MaxCaracteres.MinSenha, MaxCaracteres.MaxSenha);
-
-                if (validate.IsValid)
-                   this. _senha = value;
-                else
-                    base.AddMensagens(validate.Errors);
-            }
-        }
+        public string Senha { get; set; }
 
         /// <summary>
         /// Cria um novo administrador ou atualiza um administrador existente
@@ -73,7 +44,10 @@ namespace VotingControl
         /// <returns>Retorna true se sucesso, em caso de falha, false</returns>
         public bool Salvar()
         {
-            return base.Salvar(this);
+            if (this.Validar())
+                return base.Salvar(this);
+            else
+                return false;
         }
 
         /// <summary>
@@ -83,6 +57,30 @@ namespace VotingControl
         public bool Deletar()
         {
             return base.Deletar(this);
+        }
+
+        /// <summary>
+        /// Verifica se os atributos possuem erros
+        /// </summary>
+        /// <returns>Retorna true se for válido, senão false</returns>
+        public bool Validar()
+        {
+            base.LimparErros();
+
+            Validator validateSenha = new Validator(this.Senha, "senha");
+            validateSenha.Presence().Between(MaxCaracteres.MinSenha, MaxCaracteres.MaxSenha);
+
+            Validator validateUsuario = new Validator(this.Usuario, "usuario");
+            validateUsuario.Presence().LessOrEqualsThan(MaxCaracteres.Usuario).Uniqueness<Administrador>();
+
+            if (!validateUsuario.IsValid || !validateSenha.IsValid)
+            {
+                base.AddMensagens(validateUsuario.Errors);
+                base.AddMensagens(validateSenha.Errors);
+                return false;
+            }
+            else
+                return true;
         }
 
         public bool Login(string usuario, string senha)
