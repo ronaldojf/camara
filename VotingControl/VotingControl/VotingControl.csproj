@@ -35,6 +35,8 @@
     <OutputPath>bin\isejgtojdfgoijdafsoijhoidfjh\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
     <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -46,6 +48,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -117,6 +120,12 @@
     <Compile Include="Forms\FormVereadores.designer.cs">
       <DependentUpon>FormVereadores.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Lists\FormListPartidos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Lists\FormListPartidos.Designer.cs">
+      <DependentUpon>FormListPartidos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\Cnpj.cs" />
     <Compile Include="Helpers\Cpf.cs" />
     <Compile Include="Helpers\ReflectionHelpers.cs" />
@@ -164,6 +173,9 @@
     <EmbeddedResource Include="Forms\FormVereadores.resx">
       <DependentUpon>FormVereadores.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Lists\FormListPartidos.resx">
+      <DependentUpon>FormListPartidos.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -174,6 +186,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
